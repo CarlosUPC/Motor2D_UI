@@ -38,6 +38,7 @@ public:
 
 	p2List<TTF_Font*>	fonts;
 	TTF_Font*			default;
+	TTF_Font*			yellow_font = nullptr;
 };
 
 

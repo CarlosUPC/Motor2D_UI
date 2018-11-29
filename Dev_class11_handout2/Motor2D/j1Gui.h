@@ -54,16 +54,16 @@ public:
 	virtual ~Text();
 };
 
-class NoAtlasImage :public Passive_UI
-{
-public:
-	SDL_Texture* texture = nullptr;
-	SDL_Rect rect;
-public:
-	NoAtlasImage(iPoint position, UI_TYPE type, SDL_Texture* texture, SDL_Rect rect);
-	virtual bool Update();
-	virtual ~NoAtlasImage();
-};
+//class NoAtlasImage :public Passive_UI
+//{
+//public:
+//	SDL_Texture* texture = nullptr;
+//	SDL_Rect rect;
+//public:
+//	NoAtlasImage(iPoint position, UI_TYPE type, SDL_Texture* texture, SDL_Rect rect);
+//	virtual bool Update();
+//	virtual ~NoAtlasImage();
+//};
 
 // ---------------------------------------------------
 class j1Gui : public j1Module
@@ -95,15 +95,15 @@ public:
 
 	UI* CreateImage(iPoint position, UI_TYPE type, SDL_Rect ImageRect);
 	UI* CreateText(iPoint position, UI_TYPE type, char* string_text, TTF_Font* text_font);
-	UI* CreateBackground(iPoint position, UI_TYPE type, SDL_Texture* texture, SDL_Rect rect);
+	//UI* CreateBackground(iPoint position, UI_TYPE type, SDL_Texture* texture, SDL_Rect rect);
 
 	const SDL_Texture* GetAtlas() const;
-	SDL_Texture* GetNoAtlas();
+	//SDL_Texture* GetNoAtlas();
 
 private:
 
 	SDL_Texture* atlas = nullptr;
-	SDL_Texture* no_atlas_tex = nullptr;
+	//SDL_Texture* no_atlas_tex = nullptr;
 	p2SString atlas_file_name;
 	p2List<UI*> ui_elements;
 };

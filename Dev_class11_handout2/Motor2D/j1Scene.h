@@ -37,9 +37,23 @@ public:
 
 private:
 	SDL_Texture* debug_tex;
-	NoAtlasImage* back;
-	Image* banner;
+	Image* back;
+	//Image* banner;
 	Text* text;
+
+	Image* manage_account_button;
+	Image* community_site_button;
+	Image* remember_account_name_checkbox;
+	Image* esrbNotice;
+	Image* account_name_input_box;
+	Image* account_pasword_input_box;
+	Image* login_button;
+	Image* blizzard_logo;
+	Image* cinematics_button;
+	Image* credits_button;
+	Image* terms_of_use_button;
+	Image* quit_button;
+	Image* wow_logo;
 };
 
 #endif // __j1SCENE_H__

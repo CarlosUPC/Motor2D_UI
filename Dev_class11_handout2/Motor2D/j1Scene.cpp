@@ -32,7 +32,7 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	if(App->map->Load("iso_walk.tmx") == true)
+	/*if(App->map->Load("iso_walk.tmx") == true)
 	{
 		int w, h;
 		uchar* data = NULL;
@@ -42,12 +42,32 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);
 	}
 
-	debug_tex = App->tex->Load("maps/path2.png");
+	debug_tex = App->tex->Load("maps/path2.png");*/
+	
+	App->font->yellow_font = App->font->Load("homework/Fonts/ARIALN.ttf", 12);
 
 	// TODO 3: Create the banner (rect {485, 829, 328, 103}) and the text "Hello World"
-	banner = (Image*)App->gui->CreateImage({ 0,0 }, IMAGE, { 485, 829, 328, 103 });
-	text = (Text*)App->gui->CreateText({ 0,-25 }, TEXT, "Hola mundo!", nullptr);
-	back = (NoAtlasImage*)App->gui->CreateBackground({ 0,0 }, BACKGROUND_IMAGE, App->gui->GetNoAtlas(), { 0,0,1032,774 });
+
+	//banner = (Image*)App->gui->CreateImage({ 0,0 }, IMAGE, { 485, 829, 328, 103 });
+	//text = (Text*)App->gui->CreateText({ 0,-25 }, TEXT, "Hola mundo!", nullptr);
+
+	text = (Text*)App->gui->CreateText({ 0,-25 }, TEXT, "Hola mundo!", App->font->yellow_font);
+	back = (Image*)App->gui->CreateImage({ 0,0 }, BACKGROUND_IMAGE,{ 0,0,1032,774 });
+
+	manage_account_button = (Image*)App->gui->CreateImage({ 16,575 }, IMAGE, { 1049, 147, 138, 40 });
+	community_site_button = (Image*)App->gui->CreateImage({ 16,612 }, IMAGE, { 1049, 147, 138, 40 });
+	remember_account_name_checkbox = (Image*)App->gui->CreateImage({ 16,656 }, IMAGE, { 1217, 151, 16, 16 });
+	esrbNotice = (Image*)App->gui->CreateImage({ 20,683 }, IMAGE, { 1052, 384, 128, 40 });
+	account_name_input_box = (Image*)App->gui->CreateImage({ 445,388 }, IMAGE, { 1057, 220, 128, 20 });
+	account_pasword_input_box = (Image*)App->gui->CreateImage({ 445,464 }, IMAGE, { 1057, 220, 128, 20 });
+	login_button = (Image*)App->gui->CreateImage({ 440,525 }, IMAGE, { 1049, 147, 138, 40 });
+	blizzard_logo = (Image*)App->gui->CreateImage({ 440,680 }, IMAGE, { 1055, 279, 128, 78 });
+	cinematics_button = (Image*)App->gui->CreateImage({ 876,515 }, IMAGE, { 1049, 147, 138, 40 });
+	credits_button = (Image*)App->gui->CreateImage({ 876,552 }, IMAGE, { 1049, 147, 138, 40 });
+	terms_of_use_button = (Image*)App->gui->CreateImage({ 876,587 }, IMAGE, { 1049, 147, 138, 40 });
+	quit_button = (Image*)App->gui->CreateImage({ 876,706 }, IMAGE, { 1049, 147, 138, 40 });
+	wow_logo = (Image*)App->gui->CreateImage({ 13,19 }, IMAGE, { 1039, 22, 232, 96 });
+
 	return true;
 }
 
@@ -85,9 +105,24 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	// Gui ---
+	//banner->Update();
 	back->Update();
-	banner->Update();
 	text->Update();
+
+	manage_account_button->Update();
+	community_site_button->Update();
+	remember_account_name_checkbox->Update();
+	esrbNotice->Update();
+	account_name_input_box->Update();
+	account_pasword_input_box->Update();
+	login_button->Update();
+	blizzard_logo->Update();
+	cinematics_button->Update();
+	credits_button->Update();
+	terms_of_use_button->Update();
+	quit_button->Update();
+	wow_logo->Update();
+
 	// -------
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
