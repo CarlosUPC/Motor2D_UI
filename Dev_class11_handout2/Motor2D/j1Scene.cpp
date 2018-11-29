@@ -45,7 +45,9 @@ bool j1Scene::Start()
 	debug_tex = App->tex->Load("maps/path2.png");
 
 	// TODO 3: Create the banner (rect {485, 829, 328, 103}) and the text "Hello World"
-
+	banner = (Image*)App->gui->CreateImage({ 0,0 }, IMAGE, { 485, 829, 328, 103 });
+	text = (Text*)App->gui->CreateText({ 0,-25 }, TEXT, "Hola mundo!", nullptr);
+	back = (NoAtlasImage*)App->gui->CreateBackground({ 0,0 }, BACKGROUND_IMAGE, App->gui->GetNoAtlas(), { 0,0,1032,774 });
 	return true;
 }
 
@@ -83,7 +85,9 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)
 {
 	// Gui ---
-	
+	back->Update();
+	banner->Update();
+	text->Update();
 	// -------
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
