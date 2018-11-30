@@ -10,6 +10,8 @@
 #include "PugiXml\src\pugixml.hpp"
 
 class j1App;
+class UI;
+enum EVENT;
 
 class j1Module
 {
@@ -70,6 +72,14 @@ public:
 	virtual bool Save(pugi::xml_node&) const
 	{
 		return true;
+	}
+
+	//Gui button method
+	virtual bool EventRecieved(const UI* elem_triggered, const EVENT& event_type)
+	{
+		bool ret = false;
+
+		return ret;
 	}
 
 public:

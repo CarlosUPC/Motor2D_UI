@@ -73,29 +73,42 @@ const SDL_Texture* j1Gui::GetAtlas() const
 //}
 // class Gui ---------------------------------------------------
 
+//---------------------------------------------Constructors-----------------------------------------
+UI::UI(iPoint position, UI_TYPE type) : position(position), type(type) {}
+Passive_UI::Passive_UI(iPoint position, UI_TYPE type) : UI(position, type) {}
+Image::Image(iPoint position, UI_TYPE type, SDL_Rect rect) : Passive_UI(position, type), Image_Rect(rect) {}
+Text::Text(iPoint position, UI_TYPE type, char* string_text, TTF_Font* text_font) : Passive_UI(position, type), string(string_text), text_font(text_font) {}
+Active_UI::Active_UI(iPoint position, UI_TYPE type, SDL_Rect rect) : UI(position, type), rect(rect) {}
+Button::Button(iPoint position, UI_TYPE type, SDL_Rect rect) : Active_UI(position, type, rect) {}
 
-//---------------------------------------------UI Elements methods -----------------------------------------//
+//---------------------------------------------Updates--------------------------------------------
 bool	UI::Update() { return true; }
-UI::~UI() {}
-
 bool	Passive_UI::Update() { return true; }
-Passive_UI::~Passive_UI() {}
-
-bool	Image::Update()
-{
+bool	Image::Update(){
 	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), this->position.x, this->position.y, &this->Image_Rect);
-	LOG("Created image");
 	return true;
 }
-
-Image::~Image() {}
-
-bool Text::Update()
-{
+bool	Text::Update(){
 	App->render->Blit(App->font->Print(this->string, { 255,0,0,255 }, this->text_font), this->position.x, this->position.y);
 	return true;
 }
+
+bool	Active_UI::Update() { return true; }
+bool	Button::Update(){
+	App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), this->position.x, this->position.y, &this->rect);
+	CheckMouse(this->rect, this->position);
+	return true;
+}
+
+//---------------------------------------------Destructors-------------------------------------------
+UI::~UI() {}
+Passive_UI::~Passive_UI() {}
+Image::~Image() {}
 Text::~Text() {}
+Active_UI::~Active_UI() {}
+Button::~Button() {}
+//---------------------------------------------UI Elements methods -----------------------------------------//
+
 
 //bool NoAtlasImage::Update()
 //{
@@ -104,12 +117,6 @@ Text::~Text() {}
 //}
 //NoAtlasImage::~NoAtlasImage() {}
 
-//---------------------------------------------Constructors-----------------------------------------//
-UI::UI(iPoint position, UI_TYPE type) : position(position), type(type) {}
-Passive_UI::Passive_UI(iPoint position, UI_TYPE type) : UI(position, type) {}
-Image::Image(iPoint position, UI_TYPE type, SDL_Rect rect) : Passive_UI(position, type), Image_Rect(rect) {}
-Text::Text(iPoint position, UI_TYPE type, char* string_text, TTF_Font* text_font) : Passive_UI(position, type), string(string_text), text_font(text_font) {}
-//NoAtlasImage::NoAtlasImage(iPoint position, UI_TYPE type, SDL_Texture* texture, SDL_Rect rect) : Passive_UI(position, type), texture(texture), rect(rect) {}
 
 //------------------------Create image UI ---------------------------//
 UI* j1Gui::CreateImage(iPoint position, UI_TYPE type, SDL_Rect ImageRect)
@@ -142,3 +149,47 @@ UI* j1Gui::CreateText(iPoint position, UI_TYPE type, char* string_text, TTF_Font
 //
 //	return elemBack;
 //}
+//----------------------- Create Button UI -----------------------------//
+UI* j1Gui::CreateButton(iPoint position, UI_TYPE type, SDL_Rect ButtonRect)
+{
+	UI* elemButton = nullptr;
+
+	elemButton = new Button(position, type, ButtonRect);
+
+	ui_elements.add(elemButton);
+	return elemButton;
+}
+
+//Buttons----------------------------------------------------------------------------------------------
+EVENT Active_UI::CheckMouse(const SDL_Rect button_rect, const iPoint position)
+{
+	EVENT res = MOUSE_LEAVE;
+
+	int m_x, m_y;
+	App->input->GetMousePosition(m_x, m_y);
+
+	if (m_x < position.x + button_rect.w && m_x > position.x &&
+		m_y < position.y + button_rect.h && m_y > position.y)
+	{
+		res = MOUSE_ENTER;
+		//App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), 0, 0);
+		LOG("Mouse on button");
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		{
+			LOG("Left Click on button");
+			res = MOUSE_LEFT_CLICK;
+		}
+		else if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_REPEAT)
+		{
+			LOG("Right Click on button");
+			res = MOUSE_RIGHT_CLICK;
+			
+		}
+	}
+	else
+	{
+		res = MOUSE_LEAVE;
+	}
+
+	return res;
+}

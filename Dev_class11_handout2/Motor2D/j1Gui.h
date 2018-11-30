@@ -5,14 +5,27 @@
 #include "j1Fonts.h"
 #define CURSOR_WIDTH 2
 
+
 // TODO 1: Create your structure of classes
+
+enum EVENT
+{
+	NO_EVENT_TYPE,
+	MOUSE_ENTER,
+	MOUSE_LEAVE,
+	MOUSE_RIGHT_CLICK,
+	MOUSE_LEFT_CLICK
+};
+
 enum UI_TYPE
 {
 	NO_TYPE,
 	TEXT,
 	IMAGE,
+	BUTTON,
 	BACKGROUND_IMAGE
 };
+
 
 class UI
 {
@@ -31,6 +44,27 @@ public:
 	Passive_UI(iPoint position, UI_TYPE type);
 	virtual bool Update();
 	virtual ~Passive_UI();
+};
+
+class Active_UI :public UI
+{
+public:
+	SDL_Rect rect;
+public:
+	Active_UI(iPoint position, UI_TYPE type, SDL_Rect rect);
+	virtual bool Update();
+	virtual ~Active_UI();
+	
+	// Check Mouse
+	EVENT CheckMouse(const SDL_Rect button_rect, const iPoint position);
+};
+
+class Button :public Active_UI
+{
+public:
+	Button(iPoint position, UI_TYPE type, SDL_Rect rect);
+	virtual bool Update();
+	virtual ~Button();
 };
 
 class Image :public Passive_UI
@@ -53,6 +87,8 @@ public:
 	virtual bool Update();
 	virtual ~Text();
 };
+
+
 
 //class NoAtlasImage :public Passive_UI
 //{
@@ -88,7 +124,7 @@ public:
 	bool PostUpdate();
 
 	// Called before quitting
-	bool CleanUp();
+	bool CleanUp();	
 
 	// TODO 2: Create the factory methods
 	// Gui creation functions
@@ -96,10 +132,13 @@ public:
 	UI* CreateImage(iPoint position, UI_TYPE type, SDL_Rect ImageRect);
 	UI* CreateText(iPoint position, UI_TYPE type, char* string_text, TTF_Font* text_font);
 	//UI* CreateBackground(iPoint position, UI_TYPE type, SDL_Texture* texture, SDL_Rect rect);
-
+	UI* CreateButton(iPoint position, UI_TYPE type, SDL_Rect ButtonRect);
+	
 	const SDL_Texture* GetAtlas() const;
 	//SDL_Texture* GetNoAtlas();
-
+	
+	p2List<j1Module*> listeners;
+	
 private:
 
 	SDL_Texture* atlas = nullptr;

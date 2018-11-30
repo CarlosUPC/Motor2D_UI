@@ -10,6 +10,10 @@
     <vsync value="true"/>
   </renderer>
 
+  <font>
+    <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12"/>
+  </font>
+  
   <window>
     <resolution width="1024" height="768" scale="1"/>
     <fullscreen value="false"/>

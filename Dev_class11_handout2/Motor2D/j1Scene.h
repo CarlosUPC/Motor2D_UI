@@ -7,6 +7,7 @@ struct SDL_Texture;
 class Image;
 class Text;
 class NoAtlasImage;
+class Button;
 
 class j1Scene : public j1Module
 {
@@ -47,13 +48,15 @@ private:
 	Image* esrbNotice;
 	Image* account_name_input_box;
 	Image* account_pasword_input_box;
-	Image* login_button;
+	
 	Image* blizzard_logo;
 	Image* cinematics_button;
 	Image* credits_button;
 	Image* terms_of_use_button;
 	Image* quit_button;
 	Image* wow_logo;
+
+	Button* login_button = nullptr;
 };
 
 #endif // __j1SCENE_H__

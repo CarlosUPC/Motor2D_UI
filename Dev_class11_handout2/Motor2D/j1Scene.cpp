@@ -44,7 +44,7 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");*/
 	
-	App->font->yellow_font = App->font->Load("homework/Fonts/ARIALN.ttf", 12);
+	App->font->yellow_font = App->font->Load("fonts/open_sans/OpenSans-LightItalic.ttf", 12);
 
 	// TODO 3: Create the banner (rect {485, 829, 328, 103}) and the text "Hello World"
 
@@ -60,7 +60,7 @@ bool j1Scene::Start()
 	esrbNotice = (Image*)App->gui->CreateImage({ 20,683 }, IMAGE, { 1052, 384, 128, 40 });
 	account_name_input_box = (Image*)App->gui->CreateImage({ 445,388 }, IMAGE, { 1057, 220, 128, 20 });
 	account_pasword_input_box = (Image*)App->gui->CreateImage({ 445,464 }, IMAGE, { 1057, 220, 128, 20 });
-	login_button = (Image*)App->gui->CreateImage({ 440,525 }, IMAGE, { 1049, 147, 138, 40 });
+	
 	blizzard_logo = (Image*)App->gui->CreateImage({ 440,680 }, IMAGE, { 1055, 279, 128, 78 });
 	cinematics_button = (Image*)App->gui->CreateImage({ 876,515 }, IMAGE, { 1049, 147, 138, 40 });
 	credits_button = (Image*)App->gui->CreateImage({ 876,552 }, IMAGE, { 1049, 147, 138, 40 });
@@ -68,6 +68,7 @@ bool j1Scene::Start()
 	quit_button = (Image*)App->gui->CreateImage({ 876,706 }, IMAGE, { 1049, 147, 138, 40 });
 	wow_logo = (Image*)App->gui->CreateImage({ 13,19 }, IMAGE, { 1039, 22, 232, 96 });
 
+	login_button = (Button*)App->gui->CreateButton({ 440,525 }, BUTTON, { 1049, 147, 138, 40 });
 	return true;
 }
 
@@ -115,7 +116,7 @@ bool j1Scene::Update(float dt)
 	esrbNotice->Update();
 	account_name_input_box->Update();
 	account_pasword_input_box->Update();
-	login_button->Update();
+	
 	blizzard_logo->Update();
 	cinematics_button->Update();
 	credits_button->Update();
@@ -123,6 +124,7 @@ bool j1Scene::Update(float dt)
 	quit_button->Update();
 	wow_logo->Update();
 
+	login_button->Update();
 	// -------
 	if(App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame("save_game.xml");
