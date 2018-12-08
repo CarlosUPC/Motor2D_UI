@@ -12,6 +12,7 @@
 #include "Button.h"
 #include "Window.h"
 #include "InputText.h"
+#include "ScrollBar.h"
 
 j1Gui::j1Gui() : j1Module()
 {
@@ -172,6 +173,7 @@ UI* j1Gui::CreateUIElement(UI_type type, UI* parent, int pos_x, int pos_y, int w
 		element = new InputText(parent,pos_x, pos_y, w, h);
 		break;
 	case SCROLLBAR:
+		element = new ScrollBar(parent,pos_x, pos_y, w, h);
 		break;
 	case BUTTON:
 		element = new Button(parent,pos_x, pos_y, w, h);

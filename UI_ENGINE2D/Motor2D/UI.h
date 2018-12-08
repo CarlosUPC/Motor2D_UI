@@ -88,6 +88,15 @@ public:
 		App->render->DrawQuad(position, 255U, 0U, 0U, 255U, false, false);
 	}
 
+	void Scroll(char dir, float percentage) {
+		if (dir == 'h') {
+			draw_offset.x = -position.w*percentage;
+		}
+		if (dir == 'v') {
+			draw_offset.y = -position.h*percentage;
+		}
+	}
+
 public:
 	bool interactable = true;
 	SDL_Rect position;

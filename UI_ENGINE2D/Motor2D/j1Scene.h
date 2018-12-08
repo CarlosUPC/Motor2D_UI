@@ -12,7 +12,7 @@ class Label;
 class Button;
 class Window;
 class InputText;
-
+class ScrollBar;
 
 class j1Scene : public j1Module
 {
@@ -55,6 +55,8 @@ private:
 	Button* button2;
 	Window* window;
 	InputText* input_text;
+	ScrollBar* horizontal;
+	ScrollBar* vertical;
 };
 
 #endif // __j1SCENE_H__

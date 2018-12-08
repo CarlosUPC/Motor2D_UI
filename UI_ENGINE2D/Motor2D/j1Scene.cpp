@@ -16,6 +16,7 @@
 #include "Button.h"
 #include "InputText.h"
 #include "Window.h"
+#include "ScrollBar.h"
 
 j1Scene::j1Scene() : j1Module()
 {
@@ -55,7 +56,7 @@ bool j1Scene::Start()
 	window->SetRect({ 32,542,421,453 });
 	window->listeners.add(this);
 
-	banner = (Image*)App->gui->CreateUIElement(IMAGE,window, 50, 50, 318, 103);
+	banner = (Image*)App->gui->CreateUIElement(IMAGE,window, 50, 50, 100, 50);
 	banner->SetRect({ 485, 829, 328, 103 });
 	banner->interactable = false;
 
@@ -81,6 +82,11 @@ bool j1Scene::Start()
 	input_text->listeners.add(this);
 	input_text->is_static = true;
 
+	vertical = (ScrollBar*)App->gui->CreateUIElement(SCROLLBAR,window, 40, 50, 15, 154);
+	vertical->can_move = false;
+	vertical->SetBar(974, 788, 8, 154);
+	vertical->SetScroll(843, 330, 15, 10);
+	vertical->target = banner;
 
 	return true;
 }
