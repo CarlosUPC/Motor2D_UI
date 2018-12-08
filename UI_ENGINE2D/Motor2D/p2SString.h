@@ -385,7 +385,7 @@ private:
 	}
 
 	void alloc(uint required_size) {
-		bool saved_str = false;
+		
 		char* old = str;
 		str = new char[required_size];
 		size = required_size;

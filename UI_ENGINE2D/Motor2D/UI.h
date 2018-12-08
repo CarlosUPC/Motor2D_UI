@@ -46,8 +46,9 @@ public:
 			viewport = App->render->viewport;
 		App->render->SetViewPort(viewport);
 		
-		InnerDraw();
 		DebugDraw();
+		InnerDraw();
+		
 		App->render->ResetViewPort();
 		
 	}
