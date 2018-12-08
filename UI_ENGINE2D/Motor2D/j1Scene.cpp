@@ -205,43 +205,31 @@ void j1Scene::UIEvent(UI* element, UI_Events react)
 		if (element == text2) {
 			text2->SetText("Mouse Hovering 2");
 		}
-		if (element == button) {
-			button->OnHover();
-		}
+		
 		break;
 	case UI_Events::MOUSE_LEAVE:
 		if (element == text) {
 			text->SetText("Mouse Leaving");
 		}
-		if (element == button) {
-			button->Standard();
-		}
+		
 		break;
 	case UI_Events::RIGHT_CLICK:
 		if (element == text) {
 			text->SetText("Right Click");
 		}
-		if (element == button) {
-			button->OnClick();
-		}
+		
 		break;
 	case UI_Events::LEFT_CLICK:
 		if (element == text) {
 			text->SetText("Left Click");
 		}
-		if (element == button) {
-			button->OnClick();
-		}
+		
 		break;
 	case UI_Events::LEFT_CLICK_UP:
-		if (element == button) {
-			button->OnHover();
-		}
+	
 		break;
 	case UI_Events::RIGHT_CLICK_UP:
-		if (element == button) {
-			button->OnHover();
-		}
+		
 		break;
 	case UI_Events::DRAG:
 		int x_motion, y_motion;

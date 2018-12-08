@@ -201,22 +201,40 @@ void j1Gui::UIEvent(UI* element, UI_Events react)
 	switch (react)
 	{
 	case UI_Events::MOUSE_ENTER:
-	
+		if (element->GetType() == BUTTON) {
+			Button* button = (Button*)element;
+			button->OnHover();
+		}
 		break;
 	case UI_Events::MOUSE_LEAVE:
-		
+		if (element->GetType() == BUTTON) {
+			Button* button = (Button*)element;
+			button->Standard();
+		}
 		break;
 	case UI_Events::RIGHT_CLICK:
-	
+		if (element->GetType() == BUTTON) {
+			Button* button = (Button*)element;
+			button->OnClick();
+		}
 		break;
 	case UI_Events::LEFT_CLICK:
-	
+		if (element->GetType() == BUTTON) {
+			Button* button = (Button*)element;
+			button->OnClick();
+		}
 		break;
 	case UI_Events::LEFT_CLICK_UP:
-		
+		if (element->GetType() == BUTTON) {
+			Button* button = (Button*)element;
+			button->OnHover();
+		}
 		break;
 	case UI_Events::RIGHT_CLICK_UP:
-		
+		if (element->GetType() == BUTTON) {
+			Button* button = (Button*)element;
+			button->OnHover();
+		}
 		break;
 	case UI_Events::DRAG:
 		
