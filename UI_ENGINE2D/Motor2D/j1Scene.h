@@ -4,8 +4,6 @@
 #include "j1Module.h"
 
 struct SDL_Texture;
-class GuiImage;
-class GuiText;
 
 class Image;
 class Label;
@@ -13,6 +11,7 @@ class Button;
 class Window;
 class InputText;
 class ScrollBar;
+enum Events;
 
 class j1Scene : public j1Module
 {
@@ -41,12 +40,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void UIEvent(UI* element, UI_Events react);
+	void UI_Event(UI* element, Events react);
 
 private:
 	SDL_Texture* debug_tex;
-	//GuiImage* banner;
-	//GuiText* text;
 
 	Image* banner;
 	Label* text;

@@ -28,6 +28,9 @@
     <ClCompile Include="j1Scene.cpp">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="j1FileSystem.cpp">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClCompile>
     <ClCompile Include="PugiXml\src\pugixml.cpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
     </ClCompile>
@@ -93,6 +96,9 @@
     <ClInclude Include="j1Scene.h">
       <Filter>Desenvolupament  ========\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="j1FileSystem.h">
+      <Filter>Desenvolupament  ========\Modules</Filter>
+    </ClInclude>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
     </ClInclude>
@@ -117,35 +123,32 @@
     <ClInclude Include="j1Gui.h">
       <Filter>Desenvolupament  ========\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>Desenvolupament  ========\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="p2PQueue.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="p2Stack.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
-    <ClInclude Include="Label.h">
-      <Filter>Desenvolupament  ========\UI_Elements</Filter>
+    <ClInclude Include="UI.h">
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
-      <Filter>Desenvolupament  ========\UI_Elements</Filter>
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
     <ClInclude Include="Button.h">
-      <Filter>Desenvolupament  ========\UI_Elements</Filter>
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Desenvolupament  ========\UI_Elements</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticImage.h">
-      <Filter>Desenvolupament  ========\UI_Elements</Filter>
-    </ClInclude>
-    <ClInclude Include="InputText.h">
-      <Filter>Desenvolupament  ========\UI_Elements</Filter>
+    <ClInclude Include="Label.h">
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
     <ClInclude Include="ScrollBar.h">
-      <Filter>Desenvolupament  ========\UI_Elements</Filter>
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
+    </ClInclude>
+    <ClInclude Include="InputText.h">
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -167,8 +170,8 @@
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\UI_Elements">
-      <UniqueIdentifier>{aac1571f-ef9a-447b-98b5-d1313dc2a387}</UniqueIdentifier>
+    <Filter Include="Desenvolupament  ========\GuiElements">
+      <UniqueIdentifier>{91929050-ff15-49c6-8d1a-d0883940ca37}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

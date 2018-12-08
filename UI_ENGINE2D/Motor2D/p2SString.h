@@ -361,8 +361,10 @@ public:
 		{
 			int len = strlen(text);
 			make_room(len);
+
 			memcpy(&str[position + len], &str[position], (size + 1) - position);
 			memcpy(&str[position], text, len);
+
 		}
 		return(*this);
 	}
@@ -374,6 +376,7 @@ public:
 			return;
 		}
 		alloc(size + required_space);
+		
 	}
 
 private:
@@ -384,15 +387,18 @@ private:
 		str = new char[size];
 	}
 
-	void alloc(uint required_size) {
-		
+	void alloc(uint required_size) 
+	{
 		char* old = str;
+
 		str = new char[required_size];
 		size = required_size;
+
 		if (old)
 			strcpy_s(str, size, old);
 		else
 			Clear();
+
 		RELEASE_ARRAY(old);
 	}
 

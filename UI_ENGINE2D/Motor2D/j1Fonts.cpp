@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Textures.h"
+#include "j1FileSystem.h"
 #include "j1Fonts.h"
 
 #include "SDL\include\SDL.h"
@@ -57,7 +58,7 @@ bool j1Fonts::CleanUp()
 // Load new texture from file path
 TTF_Font* const j1Fonts::Load(const char* path, int size)
 {
-	TTF_Font* font = TTF_OpenFont(path, size);
+	TTF_Font* font = TTF_OpenFontRW(App->fs->Load(path), 1, size);
 
 	if(font == NULL)
 	{
@@ -73,7 +74,7 @@ TTF_Font* const j1Fonts::Load(const char* path, int size)
 }
 
 // Print text using font
-SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, TTF_Font* font)
+SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, _TTF_Font* font)
 {
 	SDL_Texture* ret = NULL;
 	SDL_Surface* surface = TTF_RenderText_Blended((font) ? font : default, text, color);

@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Render.h"
+#include "j1FileSystem.h"
 #include "j1Textures.h"
 #include "j1Map.h"
 #include <math.h>
@@ -191,7 +192,11 @@ bool j1Map::Load(const char* file_name)
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
 
-	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
+	char* buf;
+	int size = App->fs->Load(tmp.GetString(), &buf);
+	pugi::xml_parse_result result = map_file.load_buffer(buf, size);
+
+	RELEASE(buf);
 
 	if(result == NULL)
 	{

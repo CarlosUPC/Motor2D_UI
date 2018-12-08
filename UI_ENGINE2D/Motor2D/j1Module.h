@@ -11,9 +11,9 @@
 
 class j1App;
 class UI;
-enum UI_Events;
 
-class j1Module{
+class j1Module
+{
 public:
 
 	j1Module() : active(false)
@@ -73,9 +73,10 @@ public:
 		return true;
 	}
 
-	virtual void UIEvent(UI* element, UI_Events react) {
+	virtual void UI_Event(UI* element, int react) {
 
 	}
+
 public:
 
 	p2SString	name;

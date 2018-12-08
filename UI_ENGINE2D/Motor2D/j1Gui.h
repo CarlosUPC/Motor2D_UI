@@ -5,13 +5,13 @@
 #include "UI.h"
 #include "p2Stack.h"
 #include "p2PQueue.h"
-#define CURSOR_WIDTH 2
 
 // TODO 1: Create your structure of classes
 
 // ---------------------------------------------------
 
-enum UI_Events {
+enum Events {
+
 	MOUSE_ENTER, 
 	MOUSE_LEAVE, 
 	RIGHT_CLICK, 
@@ -19,11 +19,10 @@ enum UI_Events {
 	RIGHT_CLICK_UP, 
 	LEFT_CLICK_UP, 
 	TAB, 
-	DRAG, 
 	NONE
 };
 
-class UI;
+class UIElement;
 
 class j1Gui : public j1Module
 {
@@ -52,14 +51,18 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void UI_Event(UI* element, Events react);
+
 	// TODO 2: Create the factory methods
 	// Gui creation functions
 
-	const SDL_Texture* GetAtlas() const;
-	UI* CreateUIElement(UI_type type, UI* parent, int pos_x, int pos_y, int w , int h );
-	void UIEvent(UI* element, UI_Events react);
+	SDL_Texture* GetAtlas() const;
+
+	UI* CreateUIElement(UI_type type, int pos_x, int pos_y, int w, int h, UI* parent = nullptr);
 
 	void DeleteUIElement(UI* element);
+	
+private:
 	void ClearUIElements();
 
 private:
@@ -72,8 +75,10 @@ private:
 	p2Stack<UI*> react_stack;
 
 	iPoint last_mouse;
+
 public:
 	UI* on_UIElem = nullptr;
+
 };
 
 #endif // __j1GUI_H__

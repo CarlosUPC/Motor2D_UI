@@ -11,7 +11,7 @@
 class Window : public Image {
 public:
 	//Constructor
-	Window(UI* parent,int x, int y, int w, int h) : Image(WINDOW,parent,true,x, y, w, h)
+	Window(int x, int y, int w, int h, UI* parent) : Image(WINDOW, x, y, parent, true, w, h)
 	{
 	}
 	// Destructor
@@ -20,8 +20,8 @@ public:
 	// Draw
 	void InnerDraw()
 	{
-		if (visible) {
-			App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, false);
+		if (visible){
+			App->render->Blit(App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, false); 
 		}
 	}
 
@@ -31,4 +31,4 @@ private:
 
 private:
 };
-#endif // !_UIBUTTON_
+#endif // !_BUTTON_

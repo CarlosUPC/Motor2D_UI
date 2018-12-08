@@ -1,4 +1,3 @@
-#pragma once
 // ----------------------------------------------------
 // Prority FIFO implementation with single linked list  -------
 // ----------------------------------------------------
@@ -166,3 +165,4 @@ public:
 
 };
 #endif /*__p2PQueue_H__*/	
+

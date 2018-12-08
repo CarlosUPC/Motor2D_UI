@@ -117,7 +117,7 @@ bool j1Input::PreUpdate()
 				//LOG("Mouse button %d up", event.button.button-1);
 			break;
 
-			case SDL_MOUSEMOTION: {
+			case SDL_MOUSEMOTION:{
 				int scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
@@ -146,12 +146,12 @@ bool j1Input::CleanUp()
 	return true;
 }
 
-// ---------
 bool j1Input::GetWindowEvent(j1EventWindow ev)
 {
 	return windowEvents[ev];
 }
 
+// ---------
 bool j1Input::GetWindowEvent(int code)
 {
 	return windowEvents[code];
@@ -169,12 +169,13 @@ void j1Input::GetMouseMotion(int& x, int& y)
 	y = mouse_motion_y;
 }
 
-void j1Input::StartInputText(std::string* text, int * cursor)
+void j1Input::StartInputText(std::string * text, int * cursor)
 {
 	input_text = text;
 	input_cursor = cursor;
 	SDL_StartTextInput();
 }
+
 void j1Input::EndInputText()
 {
 	SDL_StopTextInput();

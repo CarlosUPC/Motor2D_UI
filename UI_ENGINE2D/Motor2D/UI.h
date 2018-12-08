@@ -11,33 +11,31 @@ enum UI_type {
 
 	CHECKBOX, 
 	INPUT_TEXT, 
-	SCROLLBAR,
+	SCROLLBAR, 
 	BUTTON, 
 	LABEL, 
-	IMAGE,
+	IMAGE, 
 	WINDOW, 
 	UNKNOW
 };
 
 class UI {
-public:
-	UI() : type(UNKNOW) {}
 
-	UI(UI_type type, UI* parent, bool interactable = true, int pos_x = 0, int pos_y = 0, int width = 0, int height = 0) : type(type),parent(parent), interactable(interactable), position({ pos_x, pos_y, width, height }){
-		
+public:
+	UI(): type(UNKNOW){}
+	UI(UI_type type, int pos_x, int pos_y, UI* parent, bool can_react = true, int width = 0, int height = 0): type(type),parent(parent),interactable(can_react), position({pos_x, pos_y, width, height}){
 		/*if (parent != nullptr) {
 			priority = parent->priority + 1;
 			SetPos(pos_x, pos_y);
 		}*/
-		
 	}
 
-	
-	virtual bool Update(){
+	virtual bool Update()
+	{
 		return true;
 	}
 
-	virtual void Draw()
+	virtual void Draw() 
 	{
 		SDL_Rect viewport;
 		if (parent != nullptr)
@@ -45,22 +43,26 @@ public:
 		else
 			viewport = App->render->viewport;
 		App->render->SetViewPort(viewport);
-		
+
+		//check element is inside parent boundaries
+		if (position.x < 0) position.x = 0;
+		if (position.y < 0)position.y = 0;
+		if (GetPosition().x + position.w > viewport.x + viewport.w) position.x = viewport.w - position.w;
+		if (GetPosition().y + position.h > viewport.y + viewport.h) position.y = viewport.h - position.h;
+
 		DebugDraw();
 		App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
 		InnerDraw();
-		
 		App->render->ResetViewPort();
-		
 	}
-
+	
 	virtual void InnerDraw() {}
 
 	UI_type GetType()const { return type; }
-
+	
 	void SetPos(int x, int y) {
 		if (!is_static) {
-			position.x = x;
+			position.x = x; 
 			position.y = y;
 		}
 	}
@@ -84,11 +86,11 @@ public:
 		return parent;
 	}
 
-	void DebugDraw() {
+	void DebugDraw(){
 		App->render->DrawQuad(position, 255U, 0U, 0U, 255U, false, false);
 	}
 
-	void Scroll(char dir, float percentage) {
+	virtual void Scroll(char dir, float percentage) {
 		if (dir == 'h') {
 			draw_offset.x = -position.w*percentage;
 		}
@@ -98,20 +100,19 @@ public:
 	}
 
 public:
-	bool interactable = true;
 	SDL_Rect position;
-	
+	bool interactable = true;
 	bool mouse_on = false;
-	bool mouse_off = true;
+	bool mouse_off = false;
 
+	bool can_move = true;
 	p2List<j1Module*> listeners;
 
 	bool is_static = false;
-	bool can_move = true;
 	//iPoint last_position;
+
 	bool to_delete = false;
 	bool active = true;
-
 	iPoint draw_offset = { 0,0 };
 
 private:

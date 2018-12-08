@@ -10,6 +10,7 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Scene.h"
+#include "j1FileSystem.h"
 #include "j1Map.h"
 #include "j1Pathfinding.h"
 #include "j1Fonts.h"
@@ -27,6 +28,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new j1Textures();
 	audio = new j1Audio();
 	scene = new j1Scene();
+	fs = new j1FileSystem();
 	map = new j1Map();
 	pathfinding = new j1PathFinding();
 	font = new j1Fonts();
@@ -34,6 +36,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
+	AddModule(fs);
 	AddModule(input);
 	AddModule(win);
 	AddModule(tex);
@@ -166,7 +169,10 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 {
 	pugi::xml_node ret;
 
-	pugi::xml_parse_result result = config_file.load_file("config.xml");
+	char* buf;
+	int size = App->fs->Load("config.xml", &buf);
+	pugi::xml_parse_result result = config_file.load_buffer(buf, size);
+	RELEASE(buf);
 
 	if(result == NULL)
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
@@ -218,6 +224,7 @@ void j1App::FinishUpdate()
 	{
 		j1PerfTimer t;
 		SDL_Delay(capped_ms - last_frame_ms);
+		LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
 	}
 }
 
@@ -343,7 +350,7 @@ void j1App::LoadGame(const char* file)
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
 	want_to_load = true;
-	//load_game.create("%s%s", fs->GetSaveDirectory(), file);
+	load_game.create("%s%s", fs->GetSaveDirectory(), file);
 }
 
 // ---------------------------------------
@@ -366,34 +373,43 @@ bool j1App::LoadGameNow()
 {
 	bool ret = false;
 
-	pugi::xml_document data;
-	pugi::xml_node root;
+	char* buffer;
+	uint size = fs->Load(load_game.GetString(), &buffer);
 
-	pugi::xml_parse_result result = data.load_file(load_game.GetString());
-
-	if(result != NULL)
+	if(size > 0)
 	{
-		LOG("Loading new Game State from %s...", load_game.GetString());
+		pugi::xml_document data;
+		pugi::xml_node root;
 
-		root = data.child("game_state");
+		pugi::xml_parse_result result = data.load_buffer(buffer, size);
+		RELEASE(buffer);
 
-		p2List_item<j1Module*>* item = modules.start;
-		ret = true;
-
-		while(item != NULL && ret == true)
+		if(result != NULL)
 		{
-			ret = item->data->Load(root.child(item->data->name.GetString()));
-			item = item->next;
-		}
+			LOG("Loading new Game State from %s...", load_game.GetString());
 
-		data.reset();
-		if(ret == true)
-			LOG("...finished loading");
+			root = data.child("game_state");
+
+			p2List_item<j1Module*>* item = modules.start;
+			ret = true;
+
+			while(item != NULL && ret == true)
+			{
+				ret = item->data->Load(root.child(item->data->name.GetString()));
+				item = item->next;
+			}
+
+			data.reset();
+			if(ret == true)
+				LOG("...finished loading");
+			else
+				LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+		}
 		else
-			LOG("...loading process interrupted with error on module %s", (item != NULL) ? item->data->name.GetString() : "unknown");
+			LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
 	}
 	else
-		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.GetString(), result.description());
+		LOG("Could not load game state xml file %s", load_game.GetString());
 
 	want_to_load = false;
 	return ret;
@@ -425,7 +441,7 @@ bool j1App::SavegameNow() const
 		data.save(stream);
 
 		// we are done, so write data to disk
-		//fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());
+		fs->Save(save_game.GetString(), stream.str().c_str(), stream.str().length());
 		LOG("... finished saving", save_game.GetString());
 	}
 	else

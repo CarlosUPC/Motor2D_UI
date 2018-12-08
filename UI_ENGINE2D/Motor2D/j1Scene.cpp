@@ -9,12 +9,11 @@
 #include "j1Map.h"
 #include "j1PathFinding.h"
 #include "j1Gui.h"
-#include "j1Scene.h"
-
 #include "Image.h"
 #include "Label.h"
 #include "Button.h"
 #include "InputText.h"
+#include "j1Scene.h"
 #include "Window.h"
 #include "ScrollBar.h"
 
@@ -51,42 +50,49 @@ bool j1Scene::Start()
 
 	debug_tex = App->tex->Load("maps/path2.png");
 
-	// Create UI Elemets
-	window = (Window*)App->gui->CreateUIElement(WINDOW,nullptr, 30, 30, 421, 453);
+	// UIElements Creation
+
+	window = (Window*)App->gui->CreateUIElement(WINDOW, 30, 30,421,453);
 	window->SetRect({ 32,542,421,453 });
 	window->listeners.add(this);
 
-	banner = (Image*)App->gui->CreateUIElement(IMAGE,window, 50, 50, 100, 50);
+	banner = (Image*)App->gui->CreateUIElement(IMAGE, 50, 50,100,20,window);
 	banner->SetRect({ 485, 829, 328, 103 });
 	banner->interactable = false;
 
-	button2 = (Button*)App->gui->CreateUIElement(BUTTON, window, 70, 150, 218, 57);
-	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
-	button2->listeners.add(this);
-
-	text2 = (Label*)App->gui->CreateUIElement(LABEL,button2, 50, 6, 90, 20);
-	text2->SetText("_______________");
-	text2->listeners.add(this);
-
-	button = (Button*)App->gui->CreateUIElement(BUTTON, window,10, 30, 218, 57);
-	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
-	button->listeners.add(this);
-
-	/*text = (Label*)App->gui->CreateUIElement(LABEL,button, 5, 2, 90, 20);
-	text->SetText("Helloudaa :)");
-	text->listeners.add(this);
-	text->is_static = true;*/
-
-	input_text = (InputText*)App->gui->CreateUIElement(INPUT_TEXT,nullptr, 70, 50, 50, 20);
-	input_text->SetDefaultText("Hello World");
-	input_text->listeners.add(this);
-	input_text->is_static = true;
-
-	vertical = (ScrollBar*)App->gui->CreateUIElement(SCROLLBAR,window, 40, 50, 15, 154);
+	vertical = (ScrollBar*)App->gui->CreateUIElement(SCROLLBAR, 40, 50, 15, 154, window);
 	vertical->can_move = false;
 	vertical->SetBar(974, 788, 8, 154);
 	vertical->SetScroll(843, 330, 15, 10);
 	vertical->target = banner;
+
+	horizontal = (ScrollBar*)App->gui->CreateUIElement(SCROLLBAR, 60, 80, 154, 15, window);
+	horizontal->can_move = false;
+	horizontal->SetBar(974, 788, 154, 8);
+	horizontal->SetScroll(843, 330, 10, 15);
+	horizontal->target = banner;
+
+	/*button2 = (Button*)App->gui->CreateUIElement(BUTTON, 70, 150, 218, 57, window);
+	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
+	button2->listeners.add(this);
+
+	text2 = (Label*)App->gui->CreateUIElement(LABEL, 50, 6, 90, 20, button2);
+	text2->SetText("_______________");
+	text2->listeners.add(this);
+
+	button = (Button*)App->gui->CreateUIElement(BUTTON, 10, 30, 218, 57, window);
+	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
+	button->listeners.add(this);
+
+	text = (Label*)App->gui->CreateUIElement(LABEL, 5, 2, 90, 20, button);
+	text->SetText("Helloudaa :)");
+	text->listeners.add(this);
+	text->is_static = true;*/
+
+	input_text = (InputText*)App->gui->CreateUIElement(INPUT_TEXT, 70, 50, 50, 20);
+	input_text->SetDefaultText("Hello World");
+	input_text->listeners.add(this);
+	input_text->is_static = true;
 
 	return true;
 }
@@ -145,30 +151,32 @@ bool j1Scene::Update(float dt)
 	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x -= floor(200.0f * dt);
 
-	App->map->Draw();
+	App->map->Draw();	
 
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
-					App->map->data.width, App->map->data.height,
-					App->map->data.tile_width, App->map->data.tile_height,
-					App->map->data.tilesets.count(),
-					map_coordinates.x, map_coordinates.y);
+	//int x, y;
+	//App->input->GetMousePosition(x, y);
+	//iPoint map_coordinates = App->map->WorldToMap(x - App->render->camera.x, y - App->render->camera.y);
+	//p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Tile:%d,%d",
+	//				App->map->data.width, App->map->data.height,
+	//				App->map->data.tile_width, App->map->data.tile_height,
+	//				App->map->data.tilesets.count(),
+	//				map_coordinates.x, map_coordinates.y);
 
 	//App->win->SetTitle(title.GetString());
 
-	//// Debug pathfinding ------------------------------
-	////int x, y;
+	// Debug pathfinding ------------------------------
+	//int x, y;
 	//App->input->GetMousePosition(x, y);
+	//p2SString mouse("Mouse %d %d, Rect x: %d %d y: %d %d", x, y, text->position.x, text->position.x+text->position.w, text->position.y, text->position.y+text->position.h);
+	//App->win->SetTitle(mouse.GetString());
 	//iPoint p = App->render->ScreenToWorld(x, y);
 	//p = App->map->WorldToMap(p.x, p.y);
 	//p = App->map->MapToWorld(p.x, p.y);
-
+	//
 	//App->render->Blit(debug_tex, p.x, p.y);
-
+	//
 	//const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-
+	//
 	//for(uint i = 0; i < path->Count(); ++i)
 	//{
 	//	iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
@@ -197,53 +205,40 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-
-void j1Scene::UIEvent(UI* element, UI_Events react)
+void j1Scene::UI_Event(UI * element, Events react)
 {
 	
 
 	switch (react)
 	{
-	case UI_Events::MOUSE_ENTER:
+	case MOUSE_ENTER:
 		if (element == text) {
-			text->SetText("Mouse Hovering");
+			text->SetText("Mouse Over");
 		}
 		if (element == text2) {
-			text2->SetText("Mouse Hovering 2");
+			text2->SetText("SIMON NOOB");
 		}
-		
 		break;
-	case UI_Events::MOUSE_LEAVE:
+	case MOUSE_LEAVE:
 		if (element == text) {
-			text->SetText("Mouse Leaving");
+			text->SetText("Hola Ric :)");
 		}
-		
 		break;
-	case UI_Events::RIGHT_CLICK:
+	case RIGHT_CLICK:
 		if (element == text) {
 			text->SetText("Right Click");
 		}
-		
 		break;
-	case UI_Events::LEFT_CLICK:
+	case LEFT_CLICK:
 		if (element == text) {
 			text->SetText("Left Click");
 		}
-		
 		break;
-	case UI_Events::LEFT_CLICK_UP:
-	
+	case LEFT_CLICK_UP:
 		break;
-	case UI_Events::RIGHT_CLICK_UP:
-		
+	case RIGHT_CLICK_UP:
 		break;
-	case UI_Events::DRAG:
-		int x_motion, y_motion;
-		App->input->GetMouseMotion(x_motion, y_motion);
-		if (x_motion != 0 || y_motion != 0)
-			element->SetPos(element->GetLocalPosition().x + x_motion, element->GetLocalPosition().y + y_motion);
-		break;
-	case UI_Events::TAB:
+	case TAB:
 		break;
 	default:
 		break;

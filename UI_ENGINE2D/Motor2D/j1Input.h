@@ -81,8 +81,10 @@ private:
 	int			mouse_y;
 
 public:
+	//text input management
 	std::string*	input_text = nullptr;
 	int*		input_cursor = nullptr;
+
 };
 
 #endif // __j1INPUT_H__

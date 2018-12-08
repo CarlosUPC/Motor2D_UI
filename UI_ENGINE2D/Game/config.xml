@@ -1,8 +1,8 @@
 <!-- Config file for the game -->
 
 <config>
-  <app>
-    <title>Game Development Testbed</title>
+  <app framerate_cap="">
+    <title>Pathfinding Test</title>
     <organization>UPC</organization>
   </app>
 	
@@ -10,6 +10,14 @@
     <vsync value="true"/>
   </renderer>
 
+  <font>
+    <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="12"/>
+  </font>
+
+  <gui>
+    <atlas file="gui/atlas.png"/>
+  </gui>
+    
   <window>
     <resolution width="1024" height="768" scale="1"/>
     <fullscreen value="false"/>
@@ -18,9 +26,9 @@
     <fullscreen_window value="false"/>
   </window>
 
-  <gui>
-    <atlas file="gui/atlas.png"/>
-  </gui>
+  <file_system>
+    <path>data.zip</path>
+  </file_system>
 
   <map>
     <folder>maps/</folder>

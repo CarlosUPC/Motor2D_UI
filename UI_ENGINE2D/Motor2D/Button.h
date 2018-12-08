@@ -12,22 +12,22 @@
 class Button : public Image {
 public:
 	//Constructor
-	Button(UI* parent,int x, int y, int w, int h) : Image(BUTTON,parent,true, x, y, w, h)
+	Button(int x, int y, int w, int h,UI* parent) : Image(BUTTON,x,y,parent,true,w,h)
 	{
 	}
 	// Destructor
-	~Button() {}
+	~Button(){}
 
 	// Draw
-	void InnerDraw()
+	void InnerDraw() 
 	{
 		if (image_rect.w == 0)
 			Standard();
-		App->render->Blit((SDL_Texture*)App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, false);
+		App->render->Blit(App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect,false);
 	}
 
 	//Set Draw Rect
-	void SetRects(SDL_Rect std_rect, SDL_Rect hl_rect, SDL_Rect click_rect) {
+	void SetRects(SDL_Rect std_rect,SDL_Rect hl_rect, SDL_Rect click_rect) {
 		standard_rect = std_rect;
 		highlight_rect = hl_rect;
 		clicked_rect = click_rect;
@@ -43,9 +43,9 @@ public:
 	}
 
 public:
-
+	
 private:
-
+	
 private:
 	SDL_Rect standard_rect = { 0,0,0,0 };
 	SDL_Rect highlight_rect = { 0,0,0,0 };
