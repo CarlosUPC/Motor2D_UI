@@ -369,7 +369,7 @@ public:
 
 	void make_room(const unsigned int required_space)
 	{
-		if ((size + required_space + 1) < size)
+		if ((strlen(str) + required_space + 1) <= size)
 		{
 			return;
 		}
