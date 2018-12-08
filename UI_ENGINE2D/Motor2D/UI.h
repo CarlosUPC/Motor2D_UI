@@ -11,7 +11,7 @@ enum UI_type {
 
 	CHECKBOX, 
 	INPUT_TEXT, 
-	OUTPUT_FIELD, 
+	SCROLLBAR,
 	BUTTON, 
 	LABEL, 
 	IMAGE,
@@ -47,6 +47,7 @@ public:
 		App->render->SetViewPort(viewport);
 		
 		DebugDraw();
+		App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
 		InnerDraw();
 		
 		App->render->ResetViewPort();
@@ -101,6 +102,8 @@ public:
 	//iPoint last_position;
 	bool to_delete = false;
 	bool active = true;
+
+	iPoint draw_offset = { 0,0 };
 
 private:
 	UI_type type;

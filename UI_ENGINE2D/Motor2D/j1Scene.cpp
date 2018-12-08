@@ -55,9 +55,9 @@ bool j1Scene::Start()
 	window->SetRect({ 32,542,421,453 });
 	window->listeners.add(this);
 
-	/*banner = (Image*)App->gui->CreateUIElement(IMAGE,window, 50, 50, 0, 0);
+	banner = (Image*)App->gui->CreateUIElement(IMAGE,window, 50, 50, 318, 103);
 	banner->SetRect({ 485, 829, 328, 103 });
-	banner->can_react = false;*/
+	banner->interactable = false;
 
 	button2 = (Button*)App->gui->CreateUIElement(BUTTON, window, 70, 150, 218, 57);
 	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });

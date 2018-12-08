@@ -68,7 +68,7 @@ public:
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
 
-	void StartInputText(p2SString* text, int* cursor);
+	void StartInputText(std::string* text, int* cursor);
 	void EndInputText();
 
 private:
@@ -81,7 +81,7 @@ private:
 	int			mouse_y;
 
 public:
-	p2SString*	input_text = nullptr;
+	std::string*	input_text = nullptr;
 	int*		input_cursor = nullptr;
 };
 

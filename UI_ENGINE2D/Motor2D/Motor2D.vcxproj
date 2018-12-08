@@ -121,6 +121,7 @@
     <ClInclude Include="p2Stack.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
+    <ClInclude Include="ScrollBar.h" />
     <ClInclude Include="StaticImage.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Window.h" />

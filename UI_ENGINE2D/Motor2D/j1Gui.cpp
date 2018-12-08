@@ -171,7 +171,7 @@ UI* j1Gui::CreateUIElement(UI_type type, UI* parent, int pos_x, int pos_y, int w
 	case INPUT_TEXT:
 		element = new InputText(parent,pos_x, pos_y, w, h);
 		break;
-	case OUTPUT_FIELD:
+	case SCROLLBAR:
 		break;
 	case BUTTON:
 		element = new Button(parent,pos_x, pos_y, w, h);
@@ -180,7 +180,7 @@ UI* j1Gui::CreateUIElement(UI_type type, UI* parent, int pos_x, int pos_y, int w
 		element = new Label(parent,pos_x, pos_y, w, h);
 		break;
 	case IMAGE:
-		element = new Image(parent,pos_x, pos_y);
+		element = new Image(parent,pos_x, pos_y,w,h);
 		break;
 	case WINDOW:
 		element = new Window(parent,pos_x, pos_y, w, h);

@@ -169,7 +169,7 @@ void j1Input::GetMouseMotion(int& x, int& y)
 	y = mouse_motion_y;
 }
 
-void j1Input::StartInputText(p2SString * text, int * cursor)
+void j1Input::StartInputText(std::string* text, int * cursor)
 {
 	input_text = text;
 	input_cursor = cursor;

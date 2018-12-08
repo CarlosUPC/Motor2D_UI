@@ -56,7 +56,7 @@ public:
 	// Gui creation functions
 
 	const SDL_Texture* GetAtlas() const;
-	UI* CreateUIElement(UI_type type, UI* parent = nullptr, int pos_x = 0, int pos_y = 0, int w = 0, int h = 0);
+	UI* CreateUIElement(UI_type type, UI* parent, int pos_x, int pos_y, int w , int h );
 	void UIEvent(UI* element, UI_Events react);
 
 	void DeleteUIElement(UI* element);
