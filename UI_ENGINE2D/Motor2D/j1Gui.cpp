@@ -45,9 +45,14 @@ bool j1Gui::Start()
 bool j1Gui::PreUpdate()
 {
 	bool ret = true;
+	
+	ClearUIElements();
+
 	for (p2List_item<UI*>* item = UIelements.start; item != nullptr; item = item->next) {
-		ret = item->data->Update();
-		draw_queue.Push(item->data, item->data->GetPriority());
+		if (item->data->active) {
+			ret = item->data->Update();
+			draw_queue.Push(item->data, item->data->GetPriority());
+		}
 	}
 
 	for (int i = 0; i < draw_queue.Count(); i++) {
@@ -196,23 +201,18 @@ UI* j1Gui::CreateUIElement(UI_type type, UI* parent, int pos_x, int pos_y, int w
 
 void j1Gui::DeleteUIElement(UI* element)
 {
-	for (p2List_item<UI*>* item = UIelements.start; item; item = item->next) {
-		if (item->data == element) {
-			if (on_UIElem == item->data)
-				on_UIElem = nullptr;
-			RELEASE(item->data);
-			UIelements.del(item);
-			break;
-		}
-	}
+	element->to_delete = true;
 }
 void j1Gui::ClearUIElements()
 {
 	for (p2List_item<UI*>* item = UIelements.start; item != nullptr; item = item->next) {
-		RELEASE(item->data);
+		if (item->data->to_delete == true) {
+			RELEASE(item->data);
+			UIelements.del(item);
+			if (item->data == on_UIElem)
+				on_UIElem = nullptr;
+		}
 	}
-	on_UIElem = nullptr;
-	UIelements.clear();
 }
 
 // class Gui ---------------------------------------------------

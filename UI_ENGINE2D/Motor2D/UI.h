@@ -98,6 +98,8 @@ public:
 	bool is_static = false;
 	bool can_move = true;
 	//iPoint last_position;
+	bool to_delete = false;
+	bool active = true;
 
 private:
 	UI_type type;
