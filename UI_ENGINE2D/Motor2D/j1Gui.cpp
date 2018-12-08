@@ -117,7 +117,7 @@ bool j1Gui::Update(float dt)
 		}
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && (mouse.x != last_mouse.x || mouse.y != last_mouse.y)) {
-		if (on_UIElem != nullptr && !on_UIElem->GetParent()) {
+		if (on_UIElem != nullptr && !on_UIElem->GetParent() && on_UIElem->can_move) {
 			int x_motion = mouse.x - last_mouse.x;
 			int y_motion = mouse.y - last_mouse.y;
 			on_UIElem->SetPos(on_UIElem->GetLocalPosition().x + x_motion, on_UIElem->GetLocalPosition().y + y_motion);
@@ -192,6 +192,29 @@ UI* j1Gui::CreateUIElement(UI_type type, UI* parent, int pos_x, int pos_y, int w
 
 	return element;
 }
+
+
+void j1Gui::DeleteUIElement(UI* element)
+{
+	for (p2List_item<UI*>* item = UIelements.start; item; item = item->next) {
+		if (item->data == element) {
+			if (on_UIElem == item->data)
+				on_UIElem = nullptr;
+			RELEASE(item->data);
+			UIelements.del(item);
+			break;
+		}
+	}
+}
+void j1Gui::ClearUIElements()
+{
+	for (p2List_item<UI*>* item = UIelements.start; item != nullptr; item = item->next) {
+		RELEASE(item->data);
+	}
+	on_UIElem = nullptr;
+	UIelements.clear();
+}
+
 // class Gui ---------------------------------------------------
 
 void j1Gui::UIEvent(UI* element, UI_Events react)

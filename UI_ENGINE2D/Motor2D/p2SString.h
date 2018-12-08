@@ -355,12 +355,45 @@ public:
 			return 0;
 	}
 
+	p2SString& insert(unsigned int position, const char* text)
+	{
+		if (position <= size && text != NULL)
+		{
+			int len = strlen(text);
+			make_room(len);
+			memcpy(&str[position + len], &str[position], (size + 1) - position);
+			memcpy(&str[position], text, len);
+		}
+		return(*this);
+	}
+
+	void make_room(const unsigned int required_space)
+	{
+		if ((size + required_space + 1) < size)
+		{
+			return;
+		}
+		alloc(size + required_space);
+	}
+
 private:
 
 	void Alloc(unsigned int requiered_memory)
 	{
 		size = requiered_memory;
 		str = new char[size];
+	}
+
+	void alloc(uint required_size) {
+		bool saved_str = false;
+		char* old = str;
+		str = new char[required_size];
+		size = required_size;
+		if (old)
+			strcpy_s(str, size, old);
+		else
+			Clear();
+		RELEASE_ARRAY(old);
 	}
 
 };

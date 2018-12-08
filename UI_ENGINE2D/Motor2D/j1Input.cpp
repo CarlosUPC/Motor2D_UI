@@ -11,8 +11,8 @@ j1Input::j1Input() : j1Module()
 {
 	name.create("input");
 
-	keyboard = new j1KeyState[MAX_KEYS];
-	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
+	keyboard = new j1KeyState[NUM_KEYS];
+	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * NUM_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
 }
 
@@ -52,7 +52,7 @@ bool j1Input::PreUpdate()
 	
 	const Uint8* keys = SDL_GetKeyboardState(NULL);
 
-	for(int i = 0; i < MAX_KEYS; ++i)
+	for(int i = 0; i < NUM_KEYS; ++i)
 	{
 		if(keys[i] == 1)
 		{
@@ -117,14 +117,21 @@ bool j1Input::PreUpdate()
 				//LOG("Mouse button %d up", event.button.button-1);
 			break;
 
-			case SDL_MOUSEMOTION:
+			case SDL_MOUSEMOTION: {
 				int scale = App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
 				mouse_y = event.motion.y / scale;
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
+			}
 			break;
+
+			case SDL_TEXTINPUT:
+				input_text->insert(*input_cursor, event.text.text);
+				*input_cursor += strlen(event.text.text);
+				LOG("Input event: %s", event.edit.text);
+				break;
 		}
 	}
 
@@ -145,6 +152,11 @@ bool j1Input::GetWindowEvent(j1EventWindow ev)
 	return windowEvents[ev];
 }
 
+bool j1Input::GetWindowEvent(int code)
+{
+	return windowEvents[code];
+}
+
 void j1Input::GetMousePosition(int& x, int& y)
 {
 	x = mouse_x;
@@ -155,4 +167,17 @@ void j1Input::GetMouseMotion(int& x, int& y)
 {
 	x = mouse_motion_x;
 	y = mouse_motion_y;
+}
+
+void j1Input::StartInputText(p2SString * text, int * cursor)
+{
+	input_text = text;
+	input_cursor = cursor;
+	SDL_StartTextInput();
+}
+void j1Input::EndInputText()
+{
+	SDL_StopTextInput();
+	input_cursor = nullptr;
+	input_text = nullptr;
 }

@@ -47,7 +47,7 @@ public:
 		App->render->SetViewPort(viewport);
 		
 		InnerDraw();
-
+		DebugDraw();
 		App->render->ResetViewPort();
 		
 	}
@@ -82,14 +82,21 @@ public:
 		return parent;
 	}
 
+	void DebugDraw() {
+		App->render->DrawQuad(position, 255U, 0U, 0U, 255U, false, false);
+	}
+
 public:
 	bool interactable = true;
 	SDL_Rect position;
 	
 	bool mouse_on = false;
 	bool mouse_off = true;
+
 	p2List<j1Module*> listeners;
+
 	bool is_static = false;
+	bool can_move = true;
 	//iPoint last_position;
 
 private:

@@ -74,12 +74,12 @@ bool j1Scene::Start()
 	/*text = (Label*)App->gui->CreateUIElement(LABEL,button, 5, 2, 90, 15);
 	text->SetText("Helloudaa :)");
 	text->listeners.add(this);
-	text->is_static = true;
+	text->is_static = true;*/
 
 	input_text = (InputText*)App->gui->CreateUIElement(INPUT_TEXT,nullptr, 70, 50, 50, 20);
 	input_text->SetDefaultText("Hello World");
 	input_text->listeners.add(this);
-	input_text->is_static = true;*/
+	input_text->is_static = true;
 
 
 	return true;

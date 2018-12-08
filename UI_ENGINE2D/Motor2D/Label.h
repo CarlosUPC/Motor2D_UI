@@ -14,7 +14,10 @@ public:
 	Label(UI_type type, UI* parent,int pos_x, int pos_y, int w, int h) : UI(type,parent,true, pos_x, pos_y, w, h) {}
 
 	void InnerDraw() {
-		App->render->Blit(App->font->Print(text.GetString()), position.x, position.y, NULL, false);
+		text_texture = App->font->Print(text.GetString());
+		SDL_QueryTexture(text_texture, NULL, NULL, &texture_rect.w, &texture_rect.h);
+		App->render->Blit(text_texture, position.x, position.y, &texture_rect, false);
+		//App->render->Blit(App->font->Print(text.GetString()), position.x, position.y, NULL, false);
 	}
 
 	void SetText(char* txt) {
@@ -22,7 +25,9 @@ public:
 	}
 
 public:
-	p2SString text;
+	p2SString text = "";
+	SDL_Texture* text_texture;
+	SDL_Rect texture_rect = { 0, 0, 0, 0 };
 private:
 };
 

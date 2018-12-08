@@ -58,6 +58,10 @@ public:
 	const SDL_Texture* GetAtlas() const;
 	UI* CreateUIElement(UI_type type, UI* parent = nullptr, int pos_x = 0, int pos_y = 0, int w = 0, int h = 0);
 	void UIEvent(UI* element, UI_Events react);
+
+	void DeleteUIElement(UI* element);
+	void ClearUIElements();
+
 private:
 
 	SDL_Texture* atlas;

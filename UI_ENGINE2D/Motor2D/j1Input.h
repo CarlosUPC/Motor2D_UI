@@ -3,7 +3,7 @@
 
 #include "j1Module.h"
 
-//#define NUM_KEYS 352
+#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
@@ -68,6 +68,9 @@ public:
 	void GetMousePosition(int &x, int &y);
 	void GetMouseMotion(int& x, int& y);
 
+	void StartInputText(p2SString* text, int* cursor);
+	void EndInputText();
+
 private:
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;
@@ -76,6 +79,10 @@ private:
 	int			mouse_motion_y;
 	int			mouse_x;
 	int			mouse_y;
+
+public:
+	p2SString*	input_text = nullptr;
+	int*		input_cursor = nullptr;
 };
 
 #endif // __j1INPUT_H__
