@@ -53,7 +53,7 @@ bool j1Scene::Start()
 	// Create UI Elemets
 	window = (Window*)App->gui->CreateUIElement(WINDOW,nullptr, 30, 30, 421, 453);
 	window->SetRect({ 32,542,421,453 });
-	window->listener = this;
+	window->listeners.add(this);
 
 	/*banner = (Image*)App->gui->CreateUIElement(IMAGE,window, 50, 50, 0, 0);
 	banner->SetRect({ 485, 829, 328, 103 });
@@ -61,24 +61,24 @@ bool j1Scene::Start()
 
 	button2 = (Button*)App->gui->CreateUIElement(BUTTON, window, 70, 150, 218, 57);
 	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
-	button2->listener = this;
+	button2->listeners.add(this);
 
 	text2 = (Label*)App->gui->CreateUIElement(LABEL,button2, 50, 6, 90, 15);
 	text2->SetText("_______________");
-	text2->listener = this;
+	text2->listeners.add(this);
 
 	button = (Button*)App->gui->CreateUIElement(BUTTON, window,10, 30, 218, 57);
 	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
-	button->listener = this;
+	button->listeners.add(this);
 
 	/*text = (Label*)App->gui->CreateUIElement(LABEL,button, 5, 2, 90, 15);
 	text->SetText("Helloudaa :)");
-	text->listener = this;
+	text->listeners.add(this);
 	text->is_static = true;
 
 	input_text = (InputText*)App->gui->CreateUIElement(INPUT_TEXT,nullptr, 70, 50, 50, 20);
 	input_text->SetDefaultText("Hello World");
-	input_text->listener = this;
+	input_text->listeners.add(this);
 	input_text->is_static = true;*/
 
 
@@ -249,7 +249,7 @@ void j1Scene::UIEvent(UI* element, UI_Events react)
 		if (x_motion != 0 || y_motion != 0)
 			element->SetPos(element->GetLocalPosition().x + x_motion, element->GetLocalPosition().y + y_motion);
 		break;
-	case TAB:
+	case UI_Events::TAB:
 		break;
 	default:
 		break;

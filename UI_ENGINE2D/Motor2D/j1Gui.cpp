@@ -65,7 +65,7 @@ bool j1Gui::Update(float dt)
 	iPoint mouse;
 	App->input->GetMousePosition(mouse.x, mouse.y);
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN || App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-		if (on_UIElem) {
+		if (on_UIElem != nullptr) {
 			if (!(mouse.x > on_UIElem->GetPosition().x && mouse.x<(on_UIElem->GetPosition().x + on_UIElem->position.w) && mouse.y > on_UIElem->GetPosition().y && mouse.y < (on_UIElem->GetPosition().y + on_UIElem->position.h))) {
 				on_UIElem = nullptr;
 			}
@@ -110,10 +110,20 @@ bool j1Gui::Update(float dt)
 			}
 		}
 		if (event != NONE) {
-			item->listener->UIEvent(item, event);
+			for (p2List_item<j1Module*>* module = item->listeners.start; module; module = module->next) {
+				module->data->UIEvent(item, event);
+			}
 			break;
 		}
 	}
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && (mouse.x != last_mouse.x || mouse.y != last_mouse.y)) {
+		if (on_UIElem != nullptr && !on_UIElem->GetParent()) {
+			int x_motion = mouse.x - last_mouse.x;
+			int y_motion = mouse.y - last_mouse.y;
+			on_UIElem->SetPos(on_UIElem->GetLocalPosition().x + x_motion, on_UIElem->GetLocalPosition().y + y_motion);
+		}
+	}
+
 	last_mouse = mouse;
 	react_stack.clear();
 
@@ -176,6 +186,7 @@ UI* j1Gui::CreateUIElement(UI_type type, UI* parent, int pos_x, int pos_y, int w
 	}
 
 	if (element != nullptr) {
+		element->listeners.add(this);
 		UIelements.add(element);
 	}
 
@@ -183,3 +194,38 @@ UI* j1Gui::CreateUIElement(UI_type type, UI* parent, int pos_x, int pos_y, int w
 }
 // class Gui ---------------------------------------------------
 
+void j1Gui::UIEvent(UI* element, UI_Events react)
+{
+
+
+	switch (react)
+	{
+	case UI_Events::MOUSE_ENTER:
+	
+		break;
+	case UI_Events::MOUSE_LEAVE:
+		
+		break;
+	case UI_Events::RIGHT_CLICK:
+	
+		break;
+	case UI_Events::LEFT_CLICK:
+	
+		break;
+	case UI_Events::LEFT_CLICK_UP:
+		
+		break;
+	case UI_Events::RIGHT_CLICK_UP:
+		
+		break;
+	case UI_Events::DRAG:
+		
+		break;
+	case UI_Events::TAB:
+
+		break;
+	default:
+
+		break;
+	}
+}

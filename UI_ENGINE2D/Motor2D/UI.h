@@ -88,7 +88,7 @@ public:
 	
 	bool mouse_on = false;
 	bool mouse_off = true;
-	j1Module* listener;
+	p2List<j1Module*> listeners;
 	bool is_static = false;
 	//iPoint last_position;
 
