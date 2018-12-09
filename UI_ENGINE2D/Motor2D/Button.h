@@ -11,55 +11,54 @@
 
 class Button : public Image {
 public:
-	//Constructor
-	Button(int x, int y, int w, int h,UI* parent) : Image(BUTTON,x,y,parent,true,w,h)
-	{
-	}
-	Button(UI_type type, int x, int y, int w, int h, UI* parent) : Image(type, x, y, parent, true, w, h)
-	{
-	}
-	// Destructor
+	//------------------------------Constructor & Destructor Function--------------------------------//
+	Button(int x, int y, int w, int h,UI* parent) : Image(BUTTON,x,y,parent,true,w,h){}
+	Button(UI_type type, int x, int y, int w, int h, UI* parent) : Image(type, x, y, parent, true, w, h){}
 	~Button(){}
-
-	// Draw
+	//------------------------------Constructor & Destructor Function--------------------------------//
+	
+	
+	//--------------------Draw Function--------------------//
 	void InnerDraw() 
 	{
 		if (image_rect.w == 0)
 			Standard();
 		App->render->Blit(App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect,false);
 	}
+	//--------------------Draw Function--------------------//
 
-	//Set Draw Rect
+
+	//-------------Factory Functions--------------//
 	void SetRects(SDL_Rect std_rect,SDL_Rect hl_rect, SDL_Rect click_rect) {
-		standard_rect = std_rect;
-		highlight_rect = hl_rect;
+		button_rect = std_rect;
+		hovered_rect = hl_rect;
 		clicked_rect = click_rect;
+		
 		if (position.w == 0 && position.h == 0) {
 			position.w = std_rect.w;
 			position.h = std_rect.h;
 		}
 	}
+
 	void Standard() {
-		image_rect = standard_rect;
+		image_rect = button_rect;
 	}
 	void OnHover() {
-		image_rect = highlight_rect;
+		image_rect = hovered_rect;
 	}
-	virtual void OnClick() {
+	void OnClick() {
 		image_rect = clicked_rect;
 	}
 
 	SDL_Rect GetClickedRect() const{
 		return clicked_rect;
 	}
+	//-------------Factory Functions--------------//
 
-public:
 	
 private:
-	
-private:
-	SDL_Rect standard_rect = { 0,0,0,0 };
-	SDL_Rect highlight_rect = { 0,0,0,0 };
+	SDL_Rect button_rect = { 0,0,0,0 };
+	SDL_Rect hovered_rect = { 0,0,0,0 };
 	SDL_Rect clicked_rect = { 0,0,0,0 };
 };
 #endif // !_UIBUTTON_
