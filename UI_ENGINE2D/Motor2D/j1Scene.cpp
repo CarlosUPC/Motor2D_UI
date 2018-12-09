@@ -39,17 +39,21 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	// UIElements Creation
+	//------------------------------UI ELEMENTS--------------------------------//
 
+
+	//------------WINDOW-------------//
 	window = (Window*)App->gui->CreateUIElement(WINDOW, 30, 30,421, 453, nullptr);
 	window->SetRect({ 32,542,421,453 });
 	window->AddListener(this);
 
+	//-----------IMAGE--------------//
 	banner = (Image*)App->gui->CreateUIElement(IMAGE, 50, 50,50,50,window);
 	banner->SetRect({ 485, 829, 328, 103 });
 	banner->interactable = false;
 	banner->drawable = false;
 
+	//----------SCROLLBAR------------//
 	vertical = (ScrollBar*)App->gui->CreateUIElement(SCROLLBAR, 40, 50, 15, 154, window);
 	vertical->draggable = false;
 	vertical->SetBar(974, 788, 8, 154);
@@ -62,28 +66,34 @@ bool j1Scene::Start()
 	horizontal->SetScroll(843, 330, 10, 15);
 	horizontal->target = banner;
 
+	//-----------BUTTON------------//
+	button = (Button*)App->gui->CreateUIElement(BUTTON, 10, 250, 0, 0, window);
+	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
+	button->AddListener(this);
+
 	button2 = (Button*)App->gui->CreateUIElement(BUTTON, 70, 150, 0,0,window);
 	button2->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
 	button2->AddListener(this);
 
-	text2 = (Label*)App->gui->CreateUIElement(LABEL, 50, 6,90, 20, button2);
-	text2->SetText("_______________");
-	text2->AddListener(this);
-
-	button = (Button*)App->gui->CreateUIElement(BUTTON, 10, 250, 0,0,window);
-	button->SetRects({ 648,173,218,57 }, { 6,117,218,57 }, { 417,173,218,57 });
-	button->AddListener(this);
-
+	//-----------LABEL------------//
 	text = (Label*)App->gui->CreateUIElement(LABEL, 5, 2, 90, 20, button);
 	text->SetText("HELLOUDAA :)");
 	text->AddListener(this);
 	text->draggable = false;
 
+	text2 = (Label*)App->gui->CreateUIElement(LABEL, 50, 6,90, 20, button2);
+	text2->SetText("_______________");
+	text2->AddListener(this);
+
+
+	//---------INPUT TEXT----------//
 	input_text = (InputText*)App->gui->CreateUIElement(INPUT_TEXT, 10, 20, 70, 20,window);
 	input_text->SetDefaultText("Hello World");
 	input_text->AddListener(this);
 	input_text->draggable = false;
 
+
+	//---------CHECK BOX-----------//
 	option1 = (CheckBox*)App->gui->CreateUIElement(CHECKBOX, 400, 10);
 	option1->SetRects({ 977,432,20,21 }, { 858,89,20,21 }, { 391,168,12,11 });
 	option1->is_option = true;
@@ -103,6 +113,9 @@ bool j1Scene::Start()
 	multi_option2->SetRects({ 992,847,20,20 }, { 992,814,20,20 }, { 391,168,12,11 });
 	multi_option2->draggable = false;
 	multi_option2->AddOptions(multi_option1);
+
+
+	//------------------------------UI ELEMENTS--------------------------------//
 
 	return true;
 }
@@ -146,30 +159,38 @@ bool j1Scene::CleanUp()
 void j1Scene::UI_Events(UI * element, UI_Event react)
 {
 	
-
 	switch (react)
 	{
 	case MOUSE_ENTER:
 		if (element == text) {
-			text->SetText("Mouse Over");
+			text->SetText("Mouse ON");
 		}
 		if (element == text2) {
-			text2->SetText("SIMON NOOB");
+			text2->SetText("Mouse ON");
 		}
 		break;
 	case MOUSE_LEAVE:
 		if (element == text) {
-			text->SetText("Hola Ric :)");
+			text->SetText("Mouse OFF");
+		}
+		if (element == text2) {
+			text2->SetText("Mouse OFF");
 		}
 		break;
 	case RIGHT_CLICK:
 		if (element == text) {
 			text->SetText("Right Click");
 		}
+		if (element == text2) {
+			text2->SetText("Right Click");
+		}
 		break;
 	case LEFT_CLICK:
 		if (element == text) {
 			text->SetText("Left Click");
+		}
+		if (element == text2) {
+			text2->SetText("Left Click");
 		}
 		if (element == button2) {
 			banner->drawable = true;
