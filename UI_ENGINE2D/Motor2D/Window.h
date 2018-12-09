@@ -9,26 +9,24 @@
 #include "j1Gui.h"
 
 class Window : public Image {
-public:
-	//Constructor
-	Window(int x, int y, int w, int h, UI* parent) : Image(WINDOW, x, y, parent, true, w, h)
-	{
-	}
-	// Destructor
-	~Window() {}
 
-	// Draw
+public:
+
+	//------------------------------Constructor & Destructor Function--------------------------------//
+	Window(int x, int y, int w, int h, UI* parent) : Image(WINDOW, x, y, parent, true, w, h){}
+	~Window() {}
+	//------------------------------Constructor & Destructor Function--------------------------------//
+	
+	
+	//--------------------Draw Function--------------------//
 	void InnerDraw()
 	{
 		if (visible){
 			App->render->Blit(App->gui->GetAtlas(), draw_offset.x, draw_offset.y, &image_rect, false); 
 		}
 	}
+	//--------------------Draw Function--------------------//
 
-public:
-	bool visible = true;
-private:
 
-private:
 };
 #endif // !_UIBUTTON_

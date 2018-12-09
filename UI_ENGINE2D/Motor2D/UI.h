@@ -30,6 +30,7 @@ public:
 			SetPos(pos_x, pos_y);
 		}*/
 	}
+	~UI() {}
 	//------------------------------Constructor Functions--------------------------------//
 
 	
@@ -67,12 +68,12 @@ public:
 	 virtual void CleanUp(){}
 
 	 virtual void Scroll(char dir, float percentage) {
-		if (dir == 'h') {
+		/*if (dir == 'h') {
 			draw_offset.x = -position.w*percentage;
 		}
 		if (dir == 'v') {
 			draw_offset.y = -position.h*percentage;
-		}
+		}*/
 	 }
 	//-------------Virtual Functions--------------//
 
@@ -141,7 +142,7 @@ public:
 	bool interactable = true;
 	bool draggable = true;
 	bool active = true;
-
+	bool visible = true;
 
 	bool mouse_on = false;
 	bool mouse_off = true;
