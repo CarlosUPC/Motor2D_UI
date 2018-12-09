@@ -39,7 +39,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void UIReaction(UI* element, UI_Event react);
+	void UI_Events(UI* element, UI_Event react);
 
 private:
 	SDL_Texture* debug_tex;

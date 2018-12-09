@@ -74,7 +74,7 @@ public:
 		return true;
 	}
 
-	virtual void UIReaction(UI* element, UI_Event react) {
+	virtual void UI_Events(UI* element, UI_Event react) {
 
 	}
 

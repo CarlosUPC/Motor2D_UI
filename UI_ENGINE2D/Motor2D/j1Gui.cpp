@@ -133,7 +133,7 @@ bool j1Gui::Update(float dt)
 		}
 		if (react != NONE) {
 			for (p2List_item<j1Module*>* module = item->GetFirstListener(); module; module = module->next) {
-				module->data->UIReaction(item, react);
+				module->data->UI_Events(item, react);
 			}
 			break;
 		}
@@ -170,7 +170,7 @@ bool j1Gui::CleanUp()
 	return true;
 }
 
-void j1Gui::UIReaction(UI* element, UI_Event react)
+void j1Gui::UI_Events(UI* element, UI_Event react)
 {
 	
 	switch (react)

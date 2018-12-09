@@ -54,7 +54,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void UIReaction(UI* element, UI_Event react);
+	void UI_Events(UI* element, UI_Event react);
 
 	// TODO 2: Create the factory methods
 	// Gui creation functions

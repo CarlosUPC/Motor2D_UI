@@ -143,7 +143,7 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-void j1Scene::UIReaction(UI * element, UI_Event react)
+void j1Scene::UI_Events(UI * element, UI_Event react)
 {
 	
 
