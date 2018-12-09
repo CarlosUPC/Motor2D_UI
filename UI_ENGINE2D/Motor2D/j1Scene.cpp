@@ -51,13 +51,13 @@ bool j1Scene::Start()
 	banner->active = false;
 
 	vertical = (ScrollBar*)App->gui->CreateUIElement(SCROLLBAR, 40, 50, 15, 154, window);
-	vertical->can_move = false;
+	vertical->draggable = false;
 	vertical->SetBar(974, 788, 8, 154);
 	vertical->SetScroll(843, 330, 15, 10);
 	vertical->target = banner;
 
 	horizontal = (ScrollBar*)App->gui->CreateUIElement(SCROLLBAR, 60, 80,154, 15, window);
-	horizontal->can_move = false;
+	horizontal->draggable = false;
 	horizontal->SetBar(974, 788, 154, 8);
 	horizontal->SetScroll(843, 330, 10, 15);
 	horizontal->target = banner;
@@ -75,33 +75,33 @@ bool j1Scene::Start()
 	button->AddListener(this);
 
 	text = (Label*)App->gui->CreateUIElement(LABEL, 5, 2, 90, 20, button);
-	text->SetText("HOLA RIC :)");
+	text->SetText("HELLOUDAA :)");
 	text->AddListener(this);
-	text->can_move = false;
+	text->draggable = false;
 
 	input_text = (InputText*)App->gui->CreateUIElement(INPUT_TEXT, 10, 20, 70, 20,window);
 	input_text->SetDefaultText("Hello World");
 	input_text->AddListener(this);
-	input_text->can_move = false;
+	input_text->draggable = false;
 
 	option1 = (CheckBox*)App->gui->CreateUIElement(CHECKBOX, 400, 10);
 	option1->SetRects({ 977,432,20,21 }, { 858,89,20,21 }, { 391,168,12,11 });
 	option1->is_option = true;
-	option1->can_move = false;
+	option1->draggable = false;
 
 	option2 = (CheckBox*)App->gui->CreateUIElement(CHECKBOX, 400, 33);
 	option2->SetRects({ 977,432,20,21 }, { 858,89,20,21 }, { 391,168,12,11 });
 	option2->is_option = true;
-	option2->can_move = false;
+	option2->draggable = false;
 	option2->AddOptions(option1);
 
 	multi_option1 = (CheckBox*)App->gui->CreateUIElement(CHECKBOX, 450, 10);
 	multi_option1->SetRects({ 992,847,20,20 }, { 992,814,20,20 }, { 391,168,12,11 });
-	multi_option1->can_move = false;
+	multi_option1->draggable = false;
 
 	multi_option2 = (CheckBox*)App->gui->CreateUIElement(CHECKBOX, 450, 33);
 	multi_option2->SetRects({ 992,847,20,20 }, { 992,814,20,20 }, { 391,168,12,11 });
-	multi_option2->can_move = false;
+	multi_option2->draggable = false;
 	multi_option2->AddOptions(multi_option1);
 
 	return true;

@@ -139,7 +139,7 @@ bool j1Gui::Update(float dt)
 		}
 	}
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && (mouse.x != last_mouse.x || mouse.y != last_mouse.y)) {
-		if (on_UIElem != nullptr && on_UIElem->can_move) {
+		if (on_UIElem != nullptr && on_UIElem->draggable) {
 			int x_motion = mouse.x - last_mouse.x, y_motion = mouse.y - last_mouse.y;
 			on_UIElem->SetPos(on_UIElem->GetLocalPosition().x + x_motion, on_UIElem->GetLocalPosition().y + y_motion);
 		}
