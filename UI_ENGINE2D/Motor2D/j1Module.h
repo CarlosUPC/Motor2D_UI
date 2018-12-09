@@ -74,9 +74,8 @@ public:
 		return true;
 	}
 
-	virtual void UI_Events(UI* element, UI_Event react) {
-
-	}
+	// Application Function UI
+	virtual void UI_Events(UI* element, UI_Event action) {}
 
 public:
 

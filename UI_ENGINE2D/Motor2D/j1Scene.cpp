@@ -156,10 +156,10 @@ bool j1Scene::CleanUp()
 	return true;
 }
 
-void j1Scene::UI_Events(UI * element, UI_Event react)
+void j1Scene::UI_Events(UI * element, UI_Event action)
 {
 	
-	switch (react)
+	switch (action)
 	{
 	case MOUSE_ENTER:
 		if (element == text) {

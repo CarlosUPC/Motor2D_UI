@@ -84,56 +84,56 @@ bool j1Gui::Update(float dt)
 
 	UI* item;
 	while (react_stack.pop(item)) {
-		UI_Event react = NONE;
+		UI_Event action = NONE;
 		if (mouse.x > item->GetPosition().x && mouse.x<(item->GetPosition().x + item->position.w) && mouse.y > item->GetPosition().y && mouse.y < (item->GetPosition().y + item->position.h)) {
 			if (item->mouse_off) {
 				item->mouse_on = true;
 				item->mouse_off = false;
-				react = MOUSE_ENTER;
+				action = MOUSE_ENTER;
 			}
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
-				react = LEFT_CLICK;
+				action = LEFT_CLICK;
 				on_UIElem = item;
 			}
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN) {
-				react = RIGHT_CLICK;
+				action = RIGHT_CLICK;
 				on_UIElem = item;
 			}
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP) {
-				react = LEFT_CLICK_UP;
+				action = LEFT_CLICK_UP;
 			}
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_UP) {
-				react = RIGHT_CLICK_UP;
+				action = RIGHT_CLICK_UP;
 			}
 		}
 		else {
 			if (item->mouse_on) {
 				item->mouse_on = false;
 				item->mouse_off = true;
-				react = MOUSE_LEAVE;
+				action = MOUSE_LEAVE;
 			}
 		}
 		if (on_UIElem == item) {
 			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
-				react = LEFT_ARROW;
+				action = LEFT_ARROW;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
-				react = RIGHT_ARROW;
+				action = RIGHT_ARROW;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
-				react = UP_ARROW;
+				action = UP_ARROW;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
-				react = DOWN_ARROW;
+				action = DOWN_ARROW;
 			}
 			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
 				if(!elem_changed)
-					on_UIElem = GetNextFocus();
+					on_UIElem = GetNextElem();
 			}
 		}
-		if (react != NONE) {
+		if (action != NONE) {
 			for (p2List_item<j1Module*>* module = item->GetFirstListener(); module; module = module->next) {
-				module->data->UI_Events(item, react);
+				module->data->UI_Events(item, action);
 			}
 			break;
 		}
@@ -170,10 +170,10 @@ bool j1Gui::CleanUp()
 	return true;
 }
 
-void j1Gui::UI_Events(UI* element, UI_Event react)
+void j1Gui::UI_Events(UI* element, UI_Event action)
 {
 	
-	switch (react)
+	switch (action)
 	{
 	case MOUSE_ENTER:
 		if (element->GetType() == BUTTON) {
@@ -310,7 +310,7 @@ void j1Gui::ClearUIElements()
 	}
 }
 
-UI * j1Gui::GetNextFocus()
+UI * j1Gui::GetNextElem()
 {
 	UI* new_focus = nullptr;
 

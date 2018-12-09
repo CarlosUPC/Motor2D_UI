@@ -54,19 +54,15 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void UI_Events(UI* element, UI_Event react);
-
-	// TODO 2: Create the factory methods
-	// Gui creation functions
-
-	SDL_Texture* GetAtlas() const;
-
-	UI* CreateUIElement(UI_type type, int pos_x, int pos_y, int w = 0, int h = 0 , UI* parent = nullptr);
-
-	void DeleteUIElement(UI* element);
+	// Application Function UI
+	void UI_Events(UI* element, UI_Event action);
 	
-private:
+	// GUI creation functions
+	UI* CreateUIElement(UI_type type, int pos_x, int pos_y, int w = 0, int h = 0 , UI* parent = nullptr);
+	void DeleteUIElement(UI* element);
 	void ClearUIElements();
+	SDL_Texture* GetAtlas() const;
+	UI* GetNextElem();
 
 private:
 
@@ -82,9 +78,6 @@ private:
 
 public:
 	UI* on_UIElem = nullptr;
-
-	UI* GetNextFocus();
-
 };
 
 #endif // __j1GUI_H__

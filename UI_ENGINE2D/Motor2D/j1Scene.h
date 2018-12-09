@@ -39,7 +39,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void UI_Events(UI* element, UI_Event react);
+	// Application Function UI
+	void UI_Events(UI* element, UI_Event action);
 
 private:
 	SDL_Texture* debug_tex;
