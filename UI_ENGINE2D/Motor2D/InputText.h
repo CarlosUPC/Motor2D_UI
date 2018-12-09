@@ -49,7 +49,7 @@ public:
 
 			//App->render->DrawQuad({ position.x, position.y, 2, position.h }, 255U, 255U, 255U, 255U);
 			//App->render->Blit(App->font->Print(text.GetString()), position.x, position.y, NULL, false);
-
+		
 	}
 	bool Update() {
 		if (App->gui->on_UIElem == this) {
@@ -106,7 +106,6 @@ public:
 	}
 private:
 	int cursor_position;
-	//p2SString default_text;
 	std::string default_text;
 	bool active = true;
 };

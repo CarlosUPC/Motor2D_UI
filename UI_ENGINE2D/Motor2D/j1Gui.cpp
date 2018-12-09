@@ -13,6 +13,7 @@
 #include "Window.h"
 #include "InputText.h"
 #include "ScrollBar.h"
+#include "CheckBox.h"
 
 
 j1Gui::j1Gui() : j1Module()
@@ -48,6 +49,8 @@ bool j1Gui::PreUpdate()
 {
 	bool ret = true;
 
+	elem_changed = false;
+
 	ClearUIElements();
 
 	for (p2List_item<UI*>* item = UIelements.start; item != nullptr; item = item->next) {
@@ -81,12 +84,11 @@ bool j1Gui::Update(float dt)
 
 	UI* item;
 	while (react_stack.pop(item)) {
-		Events react = NONE;
+		UI_Event react = NONE;
 		if (mouse.x > item->GetPosition().x && mouse.x<(item->GetPosition().x + item->position.w) && mouse.y > item->GetPosition().y && mouse.y < (item->GetPosition().y + item->position.h)) {
 			if (item->mouse_off) {
 				item->mouse_on = true;
 				item->mouse_off = false;
-
 				react = MOUSE_ENTER;
 			}
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN) {
@@ -111,9 +113,27 @@ bool j1Gui::Update(float dt)
 				react = MOUSE_LEAVE;
 			}
 		}
+		if (on_UIElem == item) {
+			if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN) {
+				react = LEFT_ARROW;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN) {
+				react = RIGHT_ARROW;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) {
+				react = UP_ARROW;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN) {
+				react = DOWN_ARROW;
+			}
+			if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN) {
+				if(!elem_changed)
+					on_UIElem = GetNextFocus();
+			}
+		}
 		if (react != NONE) {
-			for (p2List_item<j1Module*>* module = item->listeners.start; module; module = module->next) {
-				module->data->UI_Event(item, react);
+			for (p2List_item<j1Module*>* module = item->GetFirstListener(); module; module = module->next) {
+				module->data->UIReaction(item, react);
 			}
 			break;
 		}
@@ -150,7 +170,7 @@ bool j1Gui::CleanUp()
 	return true;
 }
 
-void j1Gui::UI_Event(UI * element, Events react)
+void j1Gui::UIReaction(UI* element, UI_Event react)
 {
 	
 	switch (react)
@@ -160,11 +180,19 @@ void j1Gui::UI_Event(UI * element, Events react)
 			Button* button = (Button*)element;
 			button->OnHover();
 		}
+		if (element->GetType() == CHECKBOX) {
+			CheckBox* box = (CheckBox*)element;
+			box->OnHover();
+		}
 		break;
 	case MOUSE_LEAVE:
 		if (element->GetType() == BUTTON) {
 			Button* button = (Button*)element;
 			button->Standard();
+		}
+		if (element->GetType() == CHECKBOX) {
+			CheckBox* box = (CheckBox*)element;
+			box->Standard();
 		}
 		break;
 	case RIGHT_CLICK:
@@ -172,11 +200,19 @@ void j1Gui::UI_Event(UI * element, Events react)
 			Button* button = (Button*)element;
 			button->OnClick();
 		}
+		if (element->GetType() == CHECKBOX) {
+			CheckBox* box = (CheckBox*)element;
+			box->Clicked();
+		}
 		break;
 	case LEFT_CLICK:
 		if (element->GetType() == BUTTON) {
 			Button* button = (Button*)element;
 			button->OnClick();
+		}
+		if (element->GetType() == CHECKBOX) {
+			CheckBox* box = (CheckBox*)element;
+			box->Clicked();
 		}
 		break;
 	case RIGHT_CLICK_UP:
@@ -184,11 +220,19 @@ void j1Gui::UI_Event(UI * element, Events react)
 			Button* button = (Button*)element;
 			button->OnHover();
 		}
+		if (element->GetType() == CHECKBOX) {
+			CheckBox* box = (CheckBox*)element;
+			box->OnHover();
+		}
 		break;
 	case LEFT_CLICK_UP:
 		if (element->GetType() == BUTTON) {
 			Button* button = (Button*)element;
 			button->OnHover();
+		}
+		if (element->GetType() == CHECKBOX) {
+			CheckBox* box = (CheckBox*)element;
+			box->OnHover();
 		}
 		break;
 	case TAB:
@@ -206,13 +250,14 @@ SDL_Texture* j1Gui::GetAtlas() const
 	return atlas;
 }
 
-UI * j1Gui::CreateUIElement(UI_type type, int pos_x, int pos_y, int w, int h, UI* parent)
+UI * j1Gui::CreateUIElement(UI_type type, int pos_x, int pos_y,int w, int h, UI* parent)
 {
 	UI* element = nullptr;
 
 	switch (type)
 	{
 	case CHECKBOX:
+		element = new CheckBox(pos_x, pos_y, parent, w, h);
 		break;
 	case INPUT_TEXT:
 		element = new InputText(pos_x, pos_y,w,h,parent);
@@ -239,7 +284,7 @@ UI * j1Gui::CreateUIElement(UI_type type, int pos_x, int pos_y, int w, int h, UI
 	}
 
 	if (element != nullptr) {
-		element->listeners.add(this);
+		element->AddListener(this);
 		UIelements.add(element);
 	}
 
@@ -255,6 +300,7 @@ void j1Gui::ClearUIElements()
 {
 	for (p2List_item<UI*>* item = UIelements.start; item != nullptr; item = item->next) {
 		if (item->data->to_delete == true) {
+			item->data->CleanUp();
 			RELEASE(item->data);
 			UIelements.del(item);
 			if (item->data == on_UIElem)
@@ -262,6 +308,21 @@ void j1Gui::ClearUIElements()
 		}
 
 	}
+}
+
+UI * j1Gui::GetNextFocus()
+{
+	UI* new_focus = nullptr;
+
+	for (p2List_item<UI*>* item = UIelements.end; item; item = item->prev) {
+		if (on_UIElem->GetPriority() == item->data->GetPriority() && item->data != on_UIElem && item->data->interactable) {
+			new_focus = item->data;
+		}
+		else if (item->data == on_UIElem && new_focus != nullptr) break;
+
+	}
+	elem_changed = true;
+	return new_focus;
 }
 
 // class Gui ---------------------------------------------------

@@ -15,6 +15,9 @@ public:
 	Button(int x, int y, int w, int h,UI* parent) : Image(BUTTON,x,y,parent,true,w,h)
 	{
 	}
+	Button(UI_type type, int x, int y, int w, int h, UI* parent) : Image(type, x, y, parent, true, w, h)
+	{
+	}
 	// Destructor
 	~Button(){}
 
@@ -31,6 +34,10 @@ public:
 		standard_rect = std_rect;
 		highlight_rect = hl_rect;
 		clicked_rect = click_rect;
+		if (position.w == 0 && position.h == 0) {
+			position.w = std_rect.w;
+			position.h = std_rect.h;
+		}
 	}
 	void Standard() {
 		image_rect = standard_rect;
@@ -38,8 +45,12 @@ public:
 	void OnHover() {
 		image_rect = highlight_rect;
 	}
-	void OnClick() {
+	virtual void OnClick() {
 		image_rect = clicked_rect;
+	}
+
+	SDL_Rect GetClickedRect() const{
+		return clicked_rect;
 	}
 
 public:

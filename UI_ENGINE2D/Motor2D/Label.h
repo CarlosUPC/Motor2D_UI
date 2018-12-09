@@ -16,7 +16,6 @@ public:
 	void InnerDraw() {
 		if (text_texture != nullptr)
 			SDL_DestroyTexture(text_texture);
-
 		text_texture = App->font->Print(text.c_str());
 		SDL_QueryTexture(text_texture, NULL, NULL, &texture_rect.w, &texture_rect.h);
 		App->render->Blit(text_texture, draw_offset.x, draw_offset.y,&texture_rect,false);
@@ -26,8 +25,6 @@ public:
 
 		//App->render->Blit(text_texture, position.x, position.y, &texture_rect, false);
 		//App->render->Blit(App->font->Print(text.GetString()), position.x, position.y, NULL, false);
-
-
 	}
 
 	void SetText(char* txt) {

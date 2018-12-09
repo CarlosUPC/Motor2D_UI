@@ -10,8 +10,7 @@
 
 // ---------------------------------------------------
 
-enum Events {
-
+enum UI_Event {
 	MOUSE_ENTER, 
 	MOUSE_LEAVE, 
 	RIGHT_CLICK, 
@@ -19,10 +18,14 @@ enum Events {
 	RIGHT_CLICK_UP, 
 	LEFT_CLICK_UP, 
 	TAB, 
+	LEFT_ARROW, 
+	UP_ARROW, 
+	RIGHT_ARROW,
+	DOWN_ARROW, 
 	NONE
 };
 
-class UIElement;
+class UI;
 
 class j1Gui : public j1Module
 {
@@ -51,14 +54,14 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void UI_Event(UI* element, Events react);
+	void UIReaction(UI* element, UI_Event react);
 
 	// TODO 2: Create the factory methods
 	// Gui creation functions
 
 	SDL_Texture* GetAtlas() const;
 
-	UI* CreateUIElement(UI_type type, int pos_x, int pos_y, int w, int h, UI* parent = nullptr);
+	UI* CreateUIElement(UI_type type, int pos_x, int pos_y, int w = 0, int h = 0 , UI* parent = nullptr);
 
 	void DeleteUIElement(UI* element);
 	
@@ -75,9 +78,12 @@ private:
 	p2Stack<UI*> react_stack;
 
 	iPoint last_mouse;
+	bool elem_changed = false;
 
 public:
 	UI* on_UIElem = nullptr;
+
+	UI* GetNextFocus();
 
 };
 

@@ -31,4 +31,4 @@ private:
 
 private:
 };
-#endif // !_BUTTON_
+#endif // !_UIBUTTON_

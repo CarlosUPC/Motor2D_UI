@@ -4,14 +4,13 @@
 #include "j1Module.h"
 
 struct SDL_Texture;
-
 class Image;
 class Label;
 class Button;
 class Window;
 class InputText;
 class ScrollBar;
-enum Events;
+class CheckBox;
 
 class j1Scene : public j1Module
 {
@@ -40,7 +39,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void UI_Event(UI* element, Events react);
+	void UIReaction(UI* element, UI_Event react);
 
 private:
 	SDL_Texture* debug_tex;
@@ -54,6 +53,10 @@ private:
 	InputText* input_text;
 	ScrollBar* horizontal;
 	ScrollBar* vertical;
+	CheckBox* option1;
+	CheckBox* option2;
+	CheckBox* multi_option1;
+	CheckBox* multi_option2;
 };
 
 #endif // __j1SCENE_H__

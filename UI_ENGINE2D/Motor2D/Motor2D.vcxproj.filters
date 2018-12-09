@@ -132,22 +132,25 @@
     <ClInclude Include="UI.h">
       <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
-    <ClInclude Include="Image.h">
-      <Filter>Desenvolupament  ========\GuiElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Desenvolupament  ========\GuiElements</Filter>
-    </ClInclude>
     <ClInclude Include="Label.h">
       <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
-    <ClInclude Include="ScrollBar.h">
+    <ClInclude Include="Image.h">
       <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
+    </ClInclude>
     <ClInclude Include="InputText.h">
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrollBar.h">
+      <Filter>Desenvolupament  ========\GuiElements</Filter>
+    </ClInclude>
+    <ClInclude Include="CheckBox.h">
       <Filter>Desenvolupament  ========\GuiElements</Filter>
     </ClInclude>
   </ItemGroup>
@@ -173,5 +176,10 @@
     <Filter Include="Desenvolupament  ========\GuiElements">
       <UniqueIdentifier>{91929050-ff15-49c6-8d1a-d0883940ca37}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\config.xml">
+      <Filter>Desenvolupament  ========</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

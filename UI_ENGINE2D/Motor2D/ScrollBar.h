@@ -14,14 +14,14 @@ public:
 
 	void SetBar(int rect_x, int rect_y, int w, int h) 
 	{
-		bar = (Image*)App->gui->CreateUIElement(IMAGE, (position.w - w) / 2, (position.h - h) / 2, w, h, this);
+		bar = (Image*)App->gui->CreateUIElement(IMAGE, (position.w - w) / 2, (position.h - h) / 2, w, h,this);
 		bar->SetRect({ rect_x,rect_y,w,h });
 		bar->interactable = false;
 	}
 
 	void SetScroll(int rect_x, int rect_y, int w, int h)
 	{
-		scroll = (Image*)App->gui->CreateUIElement(IMAGE, 0, 0, w, h, this);
+		scroll = (Image*)App->gui->CreateUIElement(IMAGE, 0, 0, w, h,this);
 		scroll->SetRect({ rect_x,rect_y,w,h });
 	}
 
@@ -42,6 +42,11 @@ public:
 			}
 		}
 		return true;
+	}
+
+	void CleanUp() {
+		App->gui->DeleteUIElement(bar);
+		App->gui->DeleteUIElement(scroll);
 	}
 
 private:

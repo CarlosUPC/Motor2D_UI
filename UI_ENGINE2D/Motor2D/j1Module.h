@@ -11,6 +11,7 @@
 
 class j1App;
 class UI;
+enum UI_Event;
 
 class j1Module
 {
@@ -73,7 +74,7 @@ public:
 		return true;
 	}
 
-	virtual void UI_Event(UI* element, int react) {
+	virtual void UIReaction(UI* element, UI_Event react) {
 
 	}
 
