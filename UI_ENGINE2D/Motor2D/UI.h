@@ -50,7 +50,9 @@ public:
 		if (GetPosition().x + position.w > viewport.x + viewport.w) position.x = viewport.w - position.w;
 		if (GetPosition().y + position.h > viewport.y + viewport.h) position.y = viewport.h - position.h;
 		
-		//DebugDraw();
+		
+		DebugDraw();
+
 		App->render->SetViewPort({ GetPosition().x,GetPosition().y,position.w,position.h });
 		InnerDraw();
 		App->render->ResetViewPort();
@@ -112,7 +114,14 @@ public:
 
 	//-------------Debug Functions--------------//
 	void DebugDraw(){
-		App->render->DrawQuad(position, 255U, 0U, 0U, 255U, false, false);
+
+		if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
+			LOG("You can see the UI colliders");
+			ui_debug = !ui_debug;
+		}
+
+		if(ui_debug)
+			App->render->DrawQuad(position, 255U, 0U, 0U, 255U, false, false);
 	}
 	//-------------Debug Functions--------------//
 	
@@ -158,7 +167,7 @@ private:
 	int priority = 0;
 
 	p2List<j1Module*> listeners;
-
+	bool ui_debug = false;
 };
 
 #endif
