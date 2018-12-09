@@ -12,10 +12,17 @@
 #define CURSOR_W 2
 
 class InputText : public Label {
+
 public:
+
+	//------------------------------Constructor & Destructor Function--------------------------------//
 	InputText(int x, int y, int w, int h, UI* parent) : Label(INPUT_TEXT, x, y, w, h, parent){}
 	~InputText(){}
+	//------------------------------Constructor & Destructor Function--------------------------------//
 
+
+
+	//--------------------Draw Function--------------------//
 	void InnerDraw() {
 		if (label_tex != nullptr)
 			SDL_DestroyTexture(label_tex);
@@ -51,9 +58,15 @@ public:
 			//App->render->Blit(App->font->Print(text.GetString()), position.x, position.y, NULL, false);
 		
 	}
+	//--------------------Draw Function--------------------//
+
+
+
+	//-------------Virtual Functions--------------//
 	bool Update() {
 		if (App->gui->on_UIElem == this) {
 			App->input->StartInputText(&text, &cursor_position);
+
 			if (!active) {
 				active = true;
 				text.clear();
@@ -100,10 +113,17 @@ public:
 		}
 		return true;
 	}
+	//-------------Virtual Functions--------------//
 
+
+
+	//-------------Factory Functions--------------//
 	void SetDefaultText(char* text) {
 		default_text = text;
 	}
+	//-------------Factory Functions--------------//
+
+
 private:
 	int cursor_position;
 	std::string default_text;

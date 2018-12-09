@@ -1,5 +1,5 @@
-#ifndef _UISTATICIMAGE_
-#define _UISTATICIMAGE_
+#ifndef _IMAGE_
+#define _IMAGE_
 
 #include "UI.h"
 #include "j1Render.h"
@@ -50,5 +50,4 @@ public:
 protected:
 	SDL_Rect image_rect = { 0,0,0,0 };
 };
-
 #endif

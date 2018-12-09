@@ -54,7 +54,7 @@ bool j1Gui::PreUpdate()
 	ClearUIElements();
 
 	for (p2List_item<UI*>* item = UIelements.start; item != nullptr; item = item->next) {
-		if (item->data->active) {
+		if (item->data->drawable) {
 			ret = item->data->Update();
 			draw_queue.Push(item->data, item->data->GetPriority());
 		}

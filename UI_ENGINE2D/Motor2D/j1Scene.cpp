@@ -48,7 +48,7 @@ bool j1Scene::Start()
 	banner = (Image*)App->gui->CreateUIElement(IMAGE, 50, 50,50,50,window);
 	banner->SetRect({ 485, 829, 328, 103 });
 	banner->interactable = false;
-	banner->active = false;
+	banner->drawable = false;
 
 	vertical = (ScrollBar*)App->gui->CreateUIElement(SCROLLBAR, 40, 50, 15, 154, window);
 	vertical->draggable = false;
@@ -172,7 +172,7 @@ void j1Scene::UI_Events(UI * element, UI_Event react)
 			text->SetText("Left Click");
 		}
 		if (element == button2) {
-			banner->active = true;
+			banner->drawable = true;
 		}
 		break;
 	case LEFT_CLICK_UP:

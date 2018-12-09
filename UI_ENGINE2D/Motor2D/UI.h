@@ -141,7 +141,7 @@ public:
 
 	bool interactable = true;
 	bool draggable = true;
-	bool active = true;
+	bool drawable = true;
 	bool visible = true;
 
 	bool mouse_on = false;

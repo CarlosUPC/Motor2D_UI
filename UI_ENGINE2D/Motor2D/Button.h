@@ -10,6 +10,7 @@
 #include "j1Gui.h"
 
 class Button : public Image {
+
 public:
 	//------------------------------Constructor & Destructor Function--------------------------------//
 	Button(int x, int y, int w, int h,UI* parent) : Image(BUTTON,x,y,parent,true,w,h){}

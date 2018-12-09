@@ -7,11 +7,49 @@
 #include "j1Gui.h"
 
 class ScrollBar :public UI {
+
 public:
+
+	//------------------------------Constructor & Destructor Function--------------------------------//
 	ScrollBar(int x, int y, int w, int h, UI* parent) : UI(SCROLLBAR, x, y, parent, true, w, h)	{	}
-
 	~ScrollBar(){}
+	//------------------------------Constructor & Destructor Function--------------------------------//
 
+
+
+	//-------------Virtual Functions--------------//
+	bool Update()
+	{
+		if (position.w > position.h) {
+
+			if (pos_diff != pivot->GetLocalPosition().x - bar->GetLocalPosition().x) {
+				pos_diff = pivot->GetLocalPosition().x - bar->GetLocalPosition().x;
+
+				//-----------------------Scroll Function---------------------------//
+				target->Scroll('h', (float)pos_diff / (float)(bar->position.w - pivot->position.w));
+			}
+		}
+		else if (position.h > position.w) {
+
+			if (pos_diff != pivot->GetLocalPosition().y - bar->GetLocalPosition().y) {
+				pos_diff = pivot->GetLocalPosition().y - bar->GetLocalPosition().y;
+
+				//------------------------Scroll Function---------------------------//
+				target->Scroll('v', (float)pos_diff / (float)(bar->position.h - pivot->position.h));
+			}
+		}
+		return true;
+	}
+
+	void CleanUp() {
+		App->gui->DeleteUIElement(bar);
+		App->gui->DeleteUIElement(pivot);
+	}
+	//-------------Virtual Functions--------------//
+
+
+
+	//-------------Factory Functions--------------//
 	void SetBar(int rect_x, int rect_y, int w, int h) 
 	{
 		bar = (Image*)App->gui->CreateUIElement(IMAGE, (position.w - w) / 2, (position.h - h) / 2, w, h,this);
@@ -21,41 +59,19 @@ public:
 
 	void SetScroll(int rect_x, int rect_y, int w, int h)
 	{
-		scroll = (Image*)App->gui->CreateUIElement(IMAGE, 0, 0, w, h,this);
-		scroll->SetRect({ rect_x,rect_y,w,h });
+		pivot = (Image*)App->gui->CreateUIElement(IMAGE, 0, 0, w, h,this);
+		pivot->SetRect({ rect_x,rect_y,w,h });
 	}
+	//-------------Factory Functions--------------//
 
-	bool Update() 
-	{
-		if (position.w > position.h) {
-			//scroll->position.y = 0;
-			if (pos_diff != scroll->GetLocalPosition().x - bar->GetLocalPosition().x) {
-				pos_diff = scroll->GetLocalPosition().x - bar->GetLocalPosition().x;
-				target->Scroll('h', (float)pos_diff / (float)(bar->position.w - scroll->position.w)); //horizontal scrollbar
-			}
-		}
-		else if (position.h > position.w) {
-			//scroll->position.x = 0;
-			if (pos_diff != scroll->GetLocalPosition().y - bar->GetLocalPosition().y) {
-				pos_diff = scroll->GetLocalPosition().y - bar->GetLocalPosition().y;
-				target->Scroll('v', (float)pos_diff / (float)(bar->position.h - scroll->position.h)); //verticall scrollbar
-			}
-		}
-		return true;
-	}
 
-	void CleanUp() {
-		App->gui->DeleteUIElement(bar);
-		App->gui->DeleteUIElement(scroll);
-	}
 
 private:
 	Image* bar;
-	Image* scroll;
+	Image* pivot;
 	int pos_diff = 0;
 
 public:
-
 	UI* target;
 };
 
